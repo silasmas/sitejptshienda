@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="acr-devref" content="uWNJB6EwpVQwSuL5oJ7S7JkSkLzdpt8M1Xrs1MZITE1bCEbjMhscv8ZX2sTiDBarCHcu1EeJSsSLZIlYjr6YCl7pLycfn2AAQmYm">
 
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/favicon/apple-touch-icon.png') }}">
@@ -43,14 +45,62 @@
             }
         </style>
 
-        <title>@lang('miscellaneous.error_label') {{ $exception->getStatusCode() }}</title>
+        <title>
+@if (Route::is('register') || Route::is('update') || Route::is('register.check_token'))
+            @lang('auth.register')
+@endif
+
+@if (Route::is('login'))
+            @lang('auth.login')
+@endif
+
+@if (Route::is('password.request') || Route::is('password.reset'))
+            @lang('auth.reset-password')
+@endif
+
+@if (!empty($alert_msg))
+            {{ $alert_msg }}
+@endif
+
+@if (!empty($response_error))
+            {{ $response_error->data }}
+@endif
+        </title>
     </head>
 
-    <body>
+    <body class="bg-light">
         <!-- ======= Main ======= -->
         <main id="main">
+@if (!empty($alert_msg))
+            <!-- Alert Start -->
+            <div class="position-relative">
+                <div class="row position-absolute w-100" style="opacity: 0.9; z-index: 999;">
+                    <div class="col-lg-3 col-sm-4 mx-auto">
+                        <div class="alert alert-danger alert-dismissible fade show rounded-0" role="alert">
+                            {{ $alert_msg }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Alert End -->
+@endif
+
             <section id="about" class="about pt-2">
-@yield('errors-content')
+                <div class="container-xxl pb-5">
+                    <!-- Logo Start -->
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-5 mx-auto">
+                            <div class="bg-image mb-2 px-lg-3 d-flex justify-content-center">
+                                <img src="{{ asset('assets/img/logo.png') }}" alt="JPTshienda" class="img-fluid">
+                                <div class="mask"><a href="{{ route('home') }}" class="stretched-link"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Logo End -->
+
+@yield('auth-content')
+                </div>
             </section>
         </main><!-- Main -->
 
@@ -75,8 +125,6 @@
 
         <!-- Lonely Javascript -->
         <script src="{{ asset('assets/js/script.lonely.js') }}"></script>
-        <!-- Adminator Javascript -->
-        <script defer="defer" src="{{ asset('assets/js/scripts.adminator.js') }}"></script>
         <!-- Custom Javascript -->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -84,6 +132,18 @@
                 $('.btn').css({textTransform: 'inherit', paddingBottom: '0.5rem'});
                 $('.back-to-top').click(function (e) {
                     $("html, body").animate({ scrollTop: "0" });
+                });
+                /* Auto-resize textarea */
+                autosize($('textarea'));
+
+                /* jQuery Date picker */
+                var currentLanguage = $('html').attr('lang');
+
+                $('#register_birthdate').datepicker({
+                    dateFormat: currentLanguage.startsWith('fr') ? 'dd/mm/yy' : 'mm/dd/yy',
+                    onSelect: function () {
+                        $(this).focus();
+                    }
                 });
             });
         </script>

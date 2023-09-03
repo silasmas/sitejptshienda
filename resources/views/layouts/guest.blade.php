@@ -220,7 +220,7 @@
                     <h1>
                         <a href="{{ route('home') }}">
                             <img src="{{ asset('assets/img/logo.png') }}" alt="" class="img-fluid">
-                            <span class="d-inline-block pt-1 align-middle fw-bold" style="font-family: Arial, Helvetica, sans-serif; letter-spacing: 1px;">
+                            <span class="d-lg-inline-block d-none pt-1 align-middle fw-bold" style="font-family: Arial, Helvetica, sans-serif; letter-spacing: 1px;">
                                 <span class="text-blue">J-P</span> <span class="text-green">TSHIENDA</span>
                             </span>
                         </a>
@@ -235,7 +235,10 @@
                         <li><a class="nav-link scrollto{{ Route::is('works') ? ' active' : '' }}" href="{{ route('works') }}">@lang('miscellaneous.menu.public.works')</a></li>
 
 @empty(Auth::user())
-                        <li class="dropdown"><a role="button"><i class="bi bi-translate fs-4"></i></i></a>
+                        <li class="dropdown mt-lg-0 mt-5">
+                            <a class="d-inline-block" role="button">
+                                <i class="bi bi-translate me-2 fs-4"></i><span class="d-lg-none">@lang('miscellaneous.your_language')</span>
+                            </a>
                             <ul>
     @foreach ($available_locales as $locale_name => $available_locale)
                                 <li>
@@ -254,20 +257,18 @@
                                         {{ $locale_name }}
                                     </a>
         @endif
-                                </li>                                    
+                                </li>
     @endforeach
                             </ul>
-                        </li>
-
-                        <li class="nav-link dropdown">
-                            <a href="#" class="nav-link" data-bs-toggle="dropdown"></a>
-                            <div class="dropdown-menu bg-light m-0 overflow-hidden align-top">
-                            </div>
                         </li>
 @endempty
                     </ul>
 
-                        <a class="btn btn-outline-primary d-lg-inline-block d-none ms-lg-5 px-3 rounded-pill scrollto" href="#donate">
+                    <a href="{{ route('login') }}" class="btn btn-success text-white ms-5 me-lg-0 me-2 px-3 pt-2 rounded-pill">
+                        @lang('miscellaneous.login_title1')
+                    </a>
+
+                    <a href="#donate" class="btn btn-outline-primary d-lg-inline-block d-none ms-2 px-3 pt-2 rounded-pill scrollto">
                         @lang('miscellaneous.menu.public.donate')
                     </a>
                     <i class="bi bi-list mobile-nav-toggle"></i>

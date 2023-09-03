@@ -25,7 +25,7 @@
             </section><!-- Breadcrumbs Section -->
 
     @if (Route::is('news.datas'))
-            <!-- ======= Help Center Section ======= -->
+            <!-- ======= News Details Section ======= -->
             <section id="about" class="about">
                 <div class="container">
                     <div class="row">
@@ -97,9 +97,9 @@
                         </div>
                     </div>
                 </div>
-            </section><!-- End Help Center Section -->
+            </section><!-- End News Details Section -->
     @else
-            <!-- ======= Help Center Section ======= -->
+            <!-- ======= News List Section ======= -->
             <section id="about" class="about">
                 <div class="container">
                     <div class="section-title pb-0">
@@ -155,7 +155,7 @@
                         </div>
                     </div>
                 </div>
-            </section><!-- End Help Center Section -->
+            </section><!-- End News List Section -->
     @endif
 
 @endsection

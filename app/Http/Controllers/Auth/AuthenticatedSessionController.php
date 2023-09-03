@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use GuzzleHttp\Exception\ClientException;
 
+/**
+ * @author Xanders
+ * @see https://www.linkedin.com/in/xanders-samoth-b2770737/
+ */
 class AuthenticatedSessionController extends Controller
 {
     public static $apiURL;

@@ -48,7 +48,7 @@
                                         </div>
                                     </div>
 
-                                    <button class="btn btn-success btn-sm-inline-block btn-block rounded-pill mb-4 py-3 px-5 shadow-0" type="submit">@lang('miscellaneous.public.home.register_member.register')</button>
+                                    <button class="btn btn-success btn-sm-inline-block btn-block rounded-pill mb-4 py-3 px-5 shadow-0" type="submit">@lang('miscellaneous.register')</button>
 
         @if (!empty($error_message))
                                     <p class="text-center m-0 text-danger small">{{ $error_message }}</p>

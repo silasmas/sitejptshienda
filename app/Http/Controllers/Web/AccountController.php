@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use GuzzleHttp\Exception\ClientException;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use App\Http\Controllers\API\BaseController;
 
 /**
  * @author Xanders
@@ -22,11 +21,14 @@ use App\Http\Controllers\API\BaseController;
  */
 class AccountController extends Controller
 {
+    public static $apiURL;
     public static $headers;
     public static $client;
 
     public function __construct()
     {
+        // API URL
+        $this::$apiURL = 'https://api.jptshienda.cd';
         // Headers for API
         $this::$headers = [
             'Authorization' => 'Bearer IQmxemeH2oYJ7Rsp3yx97S8GEsCVEQdtNaWuh88dfYp66P0HJS8g2xVqEeCnFImCaWKyn733o7jOtzxwB5INSU5W26Bw63QruvZl',
@@ -49,21 +51,21 @@ class AccountController extends Controller
     {
         // Select user API URL
         $current_user_id = isset(request()->user_id) ? request()->user_id : Auth::user()->id;
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . $current_user_id;
+        $url_user = $this::$apiURL . '/api/user/' . $current_user_id;
         // Select address by type and user API URL
         $legal_address_type = 'Adresse légale';
         $residence_type = 'Résidence actuelle';
-        $url_legal_address = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $legal_address_type . '/ ' . $current_user_id;
-        $url_residence = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $residence_type . '/ ' . $current_user_id;
+        $url_legal_address = $this::$apiURL . '/api/address/search/' . $legal_address_type . '/ ' . $current_user_id;
+        $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . $current_user_id;
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select types by group name API URL
         $offer_type_group = 'Type d\'offre';
         $transaction_type_group = 'Type de transaction';
-        $url_offer_type = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/type/find_by_group/' . $offer_type_group;
-        $url_transaction_type = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/type/find_by_group/' . $transaction_type_group;
+        $url_offer_type = $this::$apiURL . '/api/type/find_by_group/' . $offer_type_group;
+        $url_transaction_type = $this::$apiURL . '/api/type/find_by_group/' . $transaction_type_group;
 
         try {
             // Select user API response
@@ -106,7 +108,7 @@ class AccountController extends Controller
                 'verify'  => false
             ]);
             $transaction_type = json_decode($response_transaction_type->getBody(), false);
-            $qr_code = QrCode::format('png')->merge((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($user->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($user->data->phone);
             // $qr_code = QrCode::size(135)->generate($user->data->phone);
 
             if ($user->data->role_user->role->role_name != 'Administrateur' AND $user->data->role_user->role->role_name != 'Développeur' AND $user->data->role_user->role->role_name != 'Manager') {
@@ -243,7 +245,6 @@ class AccountController extends Controller
         $reference_code = 'REF-' . ((string) random_int(10000000, 99999999)) . '-' . $user_id;
         // $gateway = 'https://beta-cardpayment.flexpay.cd/v1.1/pay';
         $gateway = 'https://cardpayment.flexpay.cd/v1.1/pay';
-        $baseController = new BaseController();
 
         try {
             // Create response by sending request to FlexPay
@@ -259,10 +260,10 @@ class AccountController extends Controller
                     'amount' => $amount,
                     'currency' => $currency,
                     'description' => __('miscellaneous.bank_transaction_description'),
-                    'callback_url' => (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/payment/store',
-                    'approve_url' => (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/account/offer_sent/' . $amount . '/' . $currency . '/0/' . $user_id,
-                    'cancel_url' => (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/account/offer_sent/' . $amount . '/' . $currency . '/1/' . $user_id,
-                    'decline_url' => (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/account/offer_sent/' . $amount . '/' . $currency . '/2/' . $user_id,
+                    'callback_url' => $this::$apiURL . '/api/payment/store',
+                    'approve_url' => $this::$apiURL . '/account/offer_sent/' . $amount . '/' . $currency . '/0/' . $user_id,
+                    'cancel_url' => $this::$apiURL . '/account/offer_sent/' . $amount . '/' . $currency . '/1/' . $user_id,
+                    'decline_url' => $this::$apiURL . '/account/offer_sent/' . $amount . '/' . $currency . '/2/' . $user_id,
                 ),
                 'verify'  => false
             ]);
@@ -299,23 +300,23 @@ class AccountController extends Controller
     public function updateAccount(Request $request)
     {
         // Select or Update current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select address by type and user API URL
         $legal_address_type = 'Adresse légale';
         $residence_type = 'Résidence actuelle';
-        $url_legal_address = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $legal_address_type . '/ ' . Auth::user()->id;
-        $url_residence = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $residence_type . '/ ' . Auth::user()->id;
+        $url_legal_address = $this::$apiURL . '/api/address/search/' . $legal_address_type . '/ ' . Auth::user()->id;
+        $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . Auth::user()->id;
         // Update address API URL
-        $url_update_address = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address';
+        $url_update_address = $this::$apiURL . '/api/address';
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select types by group name API URL
         $offer_type_group = 'Type d\'offre';
         $transaction_type_group = 'Type de transaction';
-        $url_offer_type = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/type/find_by_group/' . $offer_type_group;
-        $url_transaction_type = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/type/find_by_group/' . $transaction_type_group;
+        $url_offer_type = $this::$apiURL . '/api/type/find_by_group/' . $offer_type_group;
+        $url_transaction_type = $this::$apiURL . '/api/type/find_by_group/' . $transaction_type_group;
 
         try {
             // Select user API response
@@ -358,7 +359,7 @@ class AccountController extends Controller
                 'verify'  => false
             ]);
             $transaction_type = json_decode($response_transaction_type->getBody(), false);
-            $qr_code = QrCode::format('png')->merge((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($user->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($user->data->phone);
             // $qr_code = QrCode::size(135)->generate($user->data->phone);
 
             // Update user API response
@@ -472,7 +473,7 @@ class AccountController extends Controller
     public function updateIdentityDoc(Request $request)
     {
         // Register image API URL
-        $url_image = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/add_image/' . Auth::user()->id;
+        $url_image = $this::$apiURL . '/api/user/add_image/' . Auth::user()->id;
 
         try {
             // Register image API response

@@ -133,6 +133,7 @@
                 $('.back-to-top').click(function (e) {
                     $("html, body").animate({ scrollTop: "0" });
                 });
+
                 /* Auto-resize textarea */
                 autosize($('textarea'));
 
@@ -144,6 +145,61 @@
                     onSelect: function () {
                         $(this).focus();
                     }
+                });
+
+                /* On select change, update de country phone code */
+                $('#select_country1').on('change', function () {
+                    var countryPhoneCode = $(this).val();
+
+                    $('#phone_code_text1 .text-value').text(countryPhoneCode);
+                    $('#phone_code1').val(countryPhoneCode);
+                });
+                $('#select_country2').on('change', function () {
+                    var countryPhoneCode = $(this).val();
+
+                    $('#phone_code_text2 .text-value').text(countryPhoneCode);
+                    $('#phone_code2').val(countryPhoneCode);
+                });
+                $('#select_country3').on('change', function () {
+                    var countryPhoneCode = $(this).val();
+
+                    $('#phone_code_text3 .text-value').text(countryPhoneCode);
+                    $('#phone_code3').val(countryPhoneCode);
+                });
+
+                /* On select, show/hide some blocs */
+                // IDENTITY DOC DESCRIPTION
+                $('#register_image_name').on('change', function () {
+                    if ($('#register_image_name option').filter(':selected').text() == 'Autre' || $('#register_image_name option').filter(':selected').text() == 'Other') {
+                        $('#docDescription').removeClass('d-none');
+
+                    } else {
+                        $('#docDescription').addClass('d-none');
+                    }
+                });
+
+                /* On check, show/hide some blocs */
+                // OFFER TYPE
+                $('#donationType .form-check-input').each(function () {
+                    $(this).on('click', function () {
+                        if ($('#anonyme').is(':checked')) {
+                            $('#donorIdentity, #otherDonation').addClass('d-none');
+
+                        } else {
+                            $('#donorIdentity, #otherDonation').removeClass('d-none');
+                        }
+                    });
+                });
+                // TRANSACTION TYPE
+                $('#paymentMethod .form-check-input').each(function () {
+                    $(this).on('click', function () {
+                        if ($('#bank_card').is(':checked')) {
+                            $('#phoneNumberForMoney').addClass('d-none');
+
+                        } else {
+                            $('#phoneNumberForMoney').removeClass('d-none');
+                        }
+                    });
                 });
             });
         </script>

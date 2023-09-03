@@ -23,6 +23,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
+        // API URL
         $this::$apiURL = 'https://api.jptshienda.cd';
         // Headers for API
         $this::$headers = [

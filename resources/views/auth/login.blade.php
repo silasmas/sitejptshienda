@@ -48,7 +48,7 @@
                                     </div>
 
                                     <!-- Run login -->
-                                    <button type="submit" class="btn acr-btn-blue btn-block rounded-pill py-3 mb-4 shadow-0">@lang('miscellaneous.connection')</button>
+                                    <button type="submit" class="btn btn-primary btn-block rounded-pill py-3 mb-4 shadow-0">@lang('miscellaneous.connection')</button>
 
                                     <!-- Register or recover account -->
                                     <div class="row text-center">

@@ -26,6 +26,7 @@ class AuthenticatedSessionController extends Controller
     public function __construct()
     {
         // API URL
+        // $this::$apiURL = 'https://jptshienda.dev:1443';
         $this::$apiURL = 'https://api.jptshienda.cd';
         // Headers for API
         $this::$headers = [

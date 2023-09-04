@@ -187,7 +187,7 @@ return [
 
     // ===== PLATFORM NOTIFICATIONS
     'welcome_user' => 'Bienvenue sur l\'application JPTSHIENDA ! Veuillez lire nos conditions avant de commencer.',
-    'welcome_member' => 'Merci de faire confiance à la Fondation Jean-Pierre TSHIENDA. Nous vous notifierons dès que votre adhésion sera approuvé.',
+    'welcome_member' => 'Merci de faire confiance à la Fondation Jean-Pierre TSHIENDA. Nous vous notifierons dès que votre adhésion sera approuvée.',
     'subscribed_to_foundation' => 'a souscrit à la fondation.',
     'member_joined' => 'Votre demande d\'adhésion est approuvée. Veuillez lire nos réglements et nos conditions d\'utilisations.',
     'member_locked' => 'Votre compte a été bloqué. Si vous avez des questions, contactez-nous via le n° de téléphone affiché sur notre site web.',

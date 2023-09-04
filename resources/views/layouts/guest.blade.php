@@ -266,39 +266,41 @@
 
 @if (!empty(Auth::user()))
                     {{-- Notifications --}}
-                    <div id="publicNotification" class="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'dropdown ' : '' }}d-inline-block my-3 ms-lg-0 ms-4 me-3">
-                        <a role="button" href="{{ route('notification.home') }}" id="notificationLink" class="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? '' : 'text-secondary' }}" data-mdb-toggle="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'dropdown' : '' }}" aria-expanded="false">
+                    <div id="publicNotification" class="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'dropdown ' : '' }}d-inline-block my-3 ms-lg-0 ms-4">
+                        <a role="button" href="{{ route('notification.home') }}" id="notificationLink" class="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'text-primary' : '' }}" data-mdb-toggle="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'dropdown' : '' }}" aria-expanded="false">
                             <i class="bi {{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'bi-bell-fill ' : 'bi-bell ' }}fs-4 align-middle"></i>
     @if ($current_user->notifications[0]->status->status_name == 'Non lue')
-                            <span class="position-absolute top-0 start-100 translate-middle p-1 border border-4 border-danger rounded-circle">
+                            <span class="position-absolute translate-middle p-1 border border-4 border-danger rounded-circle" style="top: 8px; right: -14px;">
                                 <span class="visually-hidden">@lang('miscellaneous.menu.notifications')</span>
                             </span>
     @endif
                         </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end mt-3" aria-labelledby="notificationLink" style="min-width: 300px;">
+    @if ($current_user->notifications[0]->status->status_name == 'Non lue')
+                        <ul class="dropdown-menu d-inline-block py-0 rounded-3 overflow-hidden" aria-labelledby="notificationLink" style="max-width: 350px; z-index: 999;">
                             <li class="text-center">
-                                <a id="markAllRead" href="#" class="dropdown-item py-3 bg-secondary" data-user-id="{{ $current_user->id }}">
+                                <a id="markAllRead" href="#" class="dropdown-item d-inline-block py-3 bg-secondary text-white" data-user-id="{{ $current_user->id }}">
                                     <i class="far fa-circle me-2"></i>@lang('miscellaneous.mark_all_read')
                                 </a>
                             </li>
-    @forelse ($current_user->notifications as $notification)
-        @if ($loop->index < 3)
+        @forelse ($current_user->notifications as $notification)
+            @if ($loop->index < 3)
                             <li class="border-bottom border-secondary w-100">
-                                <a href="/{{ $notification->notification_url }}" class="dropdown-item py-3 text-wrap">
+                                <a href="/{{ $notification->notification_url }}" class="dropdown-item d-inline-block py-3 text-wrap">
                                     <p class="m-0 text-black">{{ $notification->notification_content }}</p>
                                     <small class="text-secondary">{{ $notification->created_at }}</small>
                                 </a>
                             </li>
-        @endif
-    @empty
-    @endforelse
+            @endif
+        @empty
+        @endforelse
                             <li class="text-center">
                                 <a href="{{ route('notification.home') }}" class="dropdown-item py-3 bg-primary text-light">
                                     @lang('miscellaneous.see_all_notifications') <i class="fa fa-angle-right align-middle ms-2 fw-100" style="font-size: 1.2rem;"></i>
                                 </a>
                             </li>
                         </ul>
+    @endif
                     </div>
 
                     {{-- Avatar --}}
@@ -373,7 +375,7 @@
             <section id="donate" class="contact section-bg">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-4 col-md-6 mb-lg-0 mb-sm-5 mb-4">
                             <div class="contact-about">
                                 <h3>@lang('miscellaneous.foundation_name')</h3>
                                 <p>@lang('miscellaneous.foundation_description')</p>
@@ -387,7 +389,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-4">
+                        <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
                             <div class="info">
                                 <div class="d-flex align-items-center">
                                     <i class="bi bi-geo-alt"></i>

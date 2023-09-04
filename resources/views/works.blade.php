@@ -6,11 +6,11 @@
             <section class="breadcrumbs">
                 <div class="container">
                     <div class="d-flex justify-content-between align-items-center">
-    @if (Route::is('news.datas'))
+    @if (Route::is('work.datas'))
                         <h2 class="mb-lg-0">@lang('miscellaneous.public.news.details')</h2>
                         <ol>
                             <li><a href="{{ route('home') }}">@lang('miscellaneous.menu.home')</a></li>
-                            <li><a href="{{ route('news.home') }}">@lang('miscellaneous.public.news.title')</a></li>
+                            <li><a href="{{ route('works') }}">@lang('miscellaneous.public.news.title')</a></li>
                             <li>@lang('miscellaneous.public.news.details')</li>
                         </ol>
     @else
@@ -24,7 +24,7 @@
                 </div>
             </section><!-- Breadcrumbs Section -->
 
-    @if (Route::is('news.datas'))
+    @if (Route::is('work.datas'))
             <!-- ======= News Details Section ======= -->
             <section id="about" class="about">
                 <div class="container">
@@ -91,7 +91,7 @@
         @endif
                             <div class="row mt-5">
                                 <div class="col-12">
-                                    <a class="btn acr-btn-yellow d-block shadow-0" href="{{ route('news.home') }}">{{ __('miscellaneous.back_list') }}</a>
+                                    <a class="btn acr-btn-yellow d-block shadow-0" href="{{ route('works') }}">{{ __('miscellaneous.back_list') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -102,10 +102,6 @@
             <!-- ======= News List Section ======= -->
             <section id="about" class="about">
                 <div class="container">
-                    <div class="section-title pb-0">
-                        <h2 class="text-green">@lang('miscellaneous.public.news.title')</h2>
-                    </div>
-
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">

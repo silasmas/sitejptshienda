@@ -28,6 +28,7 @@ class AccountController extends Controller
     public function __construct()
     {
         // API URL
+        // $this::$apiURL = 'https://jptshienda.dev:1443';
         $this::$apiURL = 'https://api.jptshienda.cd';
         // Headers for API
         $this::$headers = [
@@ -108,7 +109,7 @@ class AccountController extends Controller
                 'verify'  => false
             ]);
             $transaction_type = json_decode($response_transaction_type->getBody(), false);
-            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($user->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/favicon-32x32.png', 0.2, true)->size(135)->generate($user->data->phone);
             // $qr_code = QrCode::size(135)->generate($user->data->phone);
 
             if ($user->data->role_user->role->role_name != 'Administrateur' AND $user->data->role_user->role->role_name != 'Développeur' AND $user->data->role_user->role->role_name != 'Manager') {
@@ -137,6 +138,13 @@ class AccountController extends Controller
             }
 
         } catch (ClientException $e) {
+            // Select user API response
+            $response_user = $this::$client->request('GET', $url_user, [
+                'headers' => $this::$headers,
+                'verify'  => false
+            ]);
+            $user = json_decode($response_user->getBody(), false);
+
             // If the API returns some error, return to the page and display its message
             if ($user->data->role_user->role->role_name != 'Administrateur' AND $user->data->role_user->role->role_name != 'Développeur' AND $user->data->role_user->role->role_name != 'Manager') {
                 return view('dashboard.account', [
@@ -359,7 +367,7 @@ class AccountController extends Controller
                 'verify'  => false
             ]);
             $transaction_type = json_decode($response_transaction_type->getBody(), false);
-            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($user->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/favicon-32x32.png', 0.2, true)->size(135)->generate($user->data->phone);
             // $qr_code = QrCode::size(135)->generate($user->data->phone);
 
             // Update user API response

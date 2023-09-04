@@ -229,10 +229,107 @@
 
                 <nav id="navbar" class="navbar">
                     <ul>
-                        <li><a class="nav-link scrollto{{ Route::is('home') ? ' active' : '' }}" href="{{ route('home') }}">@lang('miscellaneous.menu.home')</a></li>
-                        <li><a class="nav-link scrollto{{ Route::is('about.home') ? ' active' : '' }}" href="{{ route('about.home') }}">@lang('miscellaneous.menu.public.about')</a></li>
-                        <li><a class="nav-link scrollto{{ Route::is('news.home') ? ' active' : '' }}" href="{{ route('news.home') }}">@lang('miscellaneous.menu.public.news')</a></li>
-                        <li><a class="nav-link scrollto{{ Route::is('works') ? ' active' : '' }}" href="{{ route('works') }}">@lang('miscellaneous.menu.public.works')</a></li>
+                        <li><a class="nav-link{{ Route::is('home') ? ' active' : '' }}" href="{{ route('home') }}">@lang('miscellaneous.menu.home')</a></li>
+                        <li><a class="nav-link{{ Route::is('about.home') ? ' active' : '' }}" href="{{ route('about.home') }}">@lang('miscellaneous.menu.public.about')</a></li>
+                        <li><a class="nav-link{{ Route::is('news.home') ? ' active' : '' }}" href="{{ route('news.home') }}">@lang('miscellaneous.menu.public.news')</a></li>
+                        <li><a class="nav-link{{ Route::is('works') ? ' active' : '' }}" href="{{ route('works') }}">@lang('miscellaneous.menu.public.works')</a></li>
+
+@if (!empty(Auth::user()))
+    @if ($current_user->notifications[0]->status->status_name == 'Non lue')
+                        {{-- NOTIFICATIONS --}}
+                        <li class="dropdown mt-lg-0 mt-2">
+                            <a href="{{ route('notification.home') }}" class="text-primary">
+                                <span>
+                                    <i class="bi bi-bell-fill fs-4 align-middle"></i>
+                                    <span class="position-absolute translate-middle start-5 p-1 border border-4 border-danger rounded-circle" style="top: 8px;">
+                                    </span>
+                                    <span class="d-lg-none d-inline-block align-middle">@lang('miscellaneous.menu.notifications')</span>
+                                </span>
+                            </a>
+
+                            <ul class="py-0 rounded-3 overflow-hidden">
+                                <li class="text-center">
+                                    <a id="markAllRead" href="#" class="dropdown-item d-inline-block py-3 bg-secondary text-white" data-user-id="{{ $current_user->id }}">
+                                        <i class="far fa-circle me-2"></i>@lang('miscellaneous.mark_all_read')
+                                    </a>
+                                </li>
+        @forelse ($current_user->notifications as $notification)
+            @if ($loop->index < 2)
+                                <li class="border-bottom border-secondary w-100">
+                                    <a href="/{{ $notification->notification_url }}" class="dropdown-item d-inline-block py-3 text-wrap">
+                                        <p class="m-0">{{ $notification->notification_content }}</p>
+                                        <small class="text-secondary">{{ $notification->created_at }}</small>
+                                    </a>
+                                </li>
+            @endif
+        @empty
+        @endforelse
+                                <li class="text-center">
+                                    <a href="{{ route('notification.home') }}" class="dropdown-item py-3 bg-primary text-light">
+                                        @lang('miscellaneous.see_all_notifications') <i class="fa fa-angle-right align-middle ms-2 fw-100" style="font-size: 1.2rem;"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+    @else
+                        <li class="mt-lg-0 mt-2">
+                            <a class="nav-link d-inline-block{{ Route::is('notification.home') ? ' active' : '' }}" href="{{ route('notification.home') }}">
+                                <i class="bi bi-bell me-2 fs-4 align-middle"></i>
+                                <span class="d-lg-none d-inline-block align-middle">@lang('miscellaneous.menu.notifications')</span>
+                            </a>
+                        </li>
+    @endif
+                        {{-- AVATAR --}}
+                        <li id="avatar" class="dropdown">
+                            <a href="{{ route('account') }}" id="avatarLink">
+                                <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="37" class="rounded-circle me-2">
+                            </a>
+
+                            <ul class="py-0 rounded-3 overflow-hidden">
+                                <li class="d-lg-flex d-none justify-content-center pt-3 bg-info">
+                                    <div class="bg-image">
+                                        <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="70" class="img-thumbnail rounded-circle me-2">
+                                        <div class="mask"></div>
+                                    </div>
+                                </li>
+                                <li class="d-lg-block d-none px-3 py-2 text-center bg-info">
+                                    <?php $names = $current_user->firstname . ' ' . $current_user->lastname ?>
+                                    <h5 class="h5 mb-1 fw-bold">{{ strlen($names) > 14 ? substr($names, 0, 14) . '...' : $names }}</h5>
+                                </li>
+    @if ($current_user->role_user->role->role_name == 'Administrateur')
+                                <li class="border-bottom border-default">
+                                    <a href="{{ route('admin') }}" class="dropdown-item d-inline-block py-3">
+                                        <i class="bi bi-grid-1x2 me-3 align-middle fs-5"></i>@lang('miscellaneous.admin.home.title')
+                                    </a>
+                                </li>
+    @endif
+    @if ($current_user->role_user->role->role_name == 'Développeur')
+                                <li class="border-bottom border-default">
+                                    <a href="{{ route('developer') }}" class="dropdown-item d-inline-block py-3">
+                                        <i class="bi bi-grid-1x2 me-3 align-middle fs-5"></i>@lang('miscellaneous.developer.home.title')
+                                    </a>
+                                </li>
+    @endif
+    @if ($current_user->role_user->role->role_name == 'Manager')
+                                <li class="border-bottom border-default">
+                                    <a href="{{ route('manager') }}" class="dropdown-item d-inline-block py-3">
+                                        <i class="bi bi-grid-1x2 me-3 align-middle fs-5"></i>@lang('miscellaneous.manager.home.title')
+                                    </a>
+                                </li>
+    @endif
+                                <li class="border-bottom border-default">
+                                    <a href="{{ route('account') }}" class="dropdown-item d-inline-block py-3">
+                                        <i class="bi bi-gear me-3 align-middle fs-5"></i>@lang('miscellaneous.menu.account_settings')
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('logout') }}" class="dropdown-item d-inline-block py-3">
+                                        <i class="bi bi-power me-3 align-middle fs-5"></i>@lang('miscellaneous.logout')
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+@endif
 
 @empty(Auth::user())
                         <li class="dropdown mt-lg-0 mt-5">
@@ -264,96 +361,7 @@
 @endempty
                     </ul>
 
-@if (!empty(Auth::user()))
-                    {{-- Notifications --}}
-                    <div id="publicNotification" class="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'dropdown ' : '' }}d-inline-block my-3 ms-lg-0 ms-4">
-                        <a role="button" href="{{ route('notification.home') }}" id="notificationLink" class="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'text-primary' : '' }}" data-mdb-toggle="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'dropdown' : '' }}" aria-expanded="false">
-                            <i class="bi {{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'bi-bell-fill ' : 'bi-bell ' }}fs-4 align-middle"></i>
-    @if ($current_user->notifications[0]->status->status_name == 'Non lue')
-                            <span class="position-absolute translate-middle p-1 border border-4 border-danger rounded-circle" style="top: 8px; right: -14px;">
-                                <span class="visually-hidden">@lang('miscellaneous.menu.notifications')</span>
-                            </span>
-    @endif
-                        </a>
-
-    @if ($current_user->notifications[0]->status->status_name == 'Non lue')
-                        <ul class="dropdown-menu d-inline-block py-0 rounded-3 overflow-hidden" aria-labelledby="notificationLink" style="max-width: 350px; z-index: 999;">
-                            <li class="text-center">
-                                <a id="markAllRead" href="#" class="dropdown-item d-inline-block py-3 bg-secondary text-white" data-user-id="{{ $current_user->id }}">
-                                    <i class="far fa-circle me-2"></i>@lang('miscellaneous.mark_all_read')
-                                </a>
-                            </li>
-        @forelse ($current_user->notifications as $notification)
-            @if ($loop->index < 3)
-                            <li class="border-bottom border-secondary w-100">
-                                <a href="/{{ $notification->notification_url }}" class="dropdown-item d-inline-block py-3 text-wrap">
-                                    <p class="m-0 text-black">{{ $notification->notification_content }}</p>
-                                    <small class="text-secondary">{{ $notification->created_at }}</small>
-                                </a>
-                            </li>
-            @endif
-        @empty
-        @endforelse
-                            <li class="text-center">
-                                <a href="{{ route('notification.home') }}" class="dropdown-item py-3 bg-primary text-light">
-                                    @lang('miscellaneous.see_all_notifications') <i class="fa fa-angle-right align-middle ms-2 fw-100" style="font-size: 1.2rem;"></i>
-                                </a>
-                            </li>
-                        </ul>
-    @endif
-                    </div>
-
-                    {{-- Avatar --}}
-                    <div id="avatar" class="dropdown d-inline-block my-3 ms-lg-0 me-1">
-                        <a role="button" href="" id="avatarLink" data-mdb-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="40" class="rounded-circle me-2">
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end mt-3" aria-labelledby="avatarLink">
-                            <li class="d-lg-flex d-none justify-content-center pt-3 bg-secondary">
-                                <div class="bg-image">
-                                    <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="70" class="img-thumbnail rounded-circle me-2">
-                                    <div class="mask"></div>
-                                </div>
-                            </li>
-                            <li class="d-lg-block d-none px-3 py-2 text-center bg-secondary">
-                                <?php $names = $current_user->firstname . ' ' . $current_user->lastname ?>
-                                <h5 class="h5 mb-1 fw-bold">{{ strlen($names) > 14 ? substr($names, 0, 14) . '...' : $names }}</h5>
-                            </li>
-    @if ($current_user->role_user->role->role_name == 'Administrateur')
-                            <li class="border-bottom border-default">
-                                <a href="{{ route('admin') }}" class="dropdown-item py-3">
-                                    <i class="bi bi-grid-1x2 me-3"></i>@lang('miscellaneous.admin.home.title')
-                                </a>
-                            </li>
-    @endif
-    @if ($current_user->role_user->role->role_name == 'Développeur')
-                            <li class="border-bottom border-default">
-                                <a href="{{ route('developer') }}" class="dropdown-item py-3">
-                                    <i class="bi bi-grid-1x2 me-3"></i>@lang('miscellaneous.developer.home.title')
-                                </a>
-                            </li>
-    @endif
-    @if ($current_user->role_user->role->role_name == 'Manager')
-                            <li class="border-bottom border-default">
-                                <a href="{{ route('manager') }}" class="dropdown-item py-3">
-                                    <i class="bi bi-grid-1x2 me-3"></i>@lang('miscellaneous.manager.home.title')
-                                </a>
-                            </li>
-    @endif
-                            <li class="border-bottom border-default">
-                                <a href="{{ route('account') }}" class="dropdown-item py-3">
-                                    <i class="bi bi-gear me-3"></i>@lang('miscellaneous.menu.account_settings')
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('logout') }}" class="dropdown-item py-3">
-                                    <i class="bi bi-power me-3"></i>@lang('miscellaneous.logout')
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-@else
+@empty(Auth::user())
                     <a href="{{ route('login') }}" class="btn btn-success text-white ms-5 me-lg-0 me-2 px-3 pt-2 rounded-pill">
                         @lang('miscellaneous.login_title1')
                     </a>
@@ -771,7 +779,8 @@
                         headers: headers,
                         type: 'PUT',
                         contentType: 'application/json',
-                        url: 'https://api.jptshienda.cd/api/notification/mark_all_read/' + parseInt($(this).attr('data-user-id')),
+                        url: 'https://jptshienda.dev:1443/api/notification/mark_all_read/' + parseInt($(this).attr('data-user-id')),
+                        // url: 'https://api.jptshienda.cd/api/notification/mark_all_read/' + parseInt($(this).attr('data-user-id')),
                         success: function () {
                             window.location.reload();
                         },

@@ -10,14 +10,14 @@
                         <h2 class="mb-lg-0">@lang('miscellaneous.public.news.details')</h2>
                         <ol>
                             <li><a href="{{ route('home') }}">@lang('miscellaneous.menu.home')</a></li>
-                            <li><a href="{{ route('works') }}">@lang('miscellaneous.public.news.title')</a></li>
+                            <li><a href="{{ route('works') }}">@lang('miscellaneous.public.works.title')</a></li>
                             <li>@lang('miscellaneous.public.news.details')</li>
                         </ol>
     @else
-                        <h2 class="mb-lg-0">@lang('miscellaneous.public.news.title')</h2>
+                        <h2 class="mb-lg-0">@lang('miscellaneous.public.works.title')</h2>
                         <ol>
                             <li><a href="{{ route('home') }}">@lang('miscellaneous.menu.home')</a></li>
-                            <li>@lang('miscellaneous.public.news.title')</li>
+                            <li>@lang('miscellaneous.public.works.title')</li>
                         </ol>
     @endif
                     </div>
@@ -102,6 +102,10 @@
             <!-- ======= News List Section ======= -->
             <section id="about" class="about">
                 <div class="container">
+                    <div class="section-title pb-0">
+                        <h2 class="text-green">@lang('miscellaneous.public.works.title')</h2>
+                    </div>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">

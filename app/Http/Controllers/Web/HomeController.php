@@ -1500,7 +1500,7 @@ class HomeController extends Controller
 
             } catch (ClientException $e) {
                 // If the API returns some error, return to the page and display its message
-                return view('news', [
+                return view('works', [
                     'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false)
                 ]);
             }

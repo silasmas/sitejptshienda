@@ -29,7 +29,6 @@
         <link rel="stylesheet" href="{{ asset('assets/addons/lonely/swiper/swiper-bundle.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/addons/custom/dataTables/datatables.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/addons/custom/cropper/css/cropper.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/croppie/croppie.css') }}">
 
         <!-- Lonely CSS File -->
         <link rel="stylesheet" href="{{ asset('assets/css/style.lonely.css') }}">
@@ -121,11 +120,11 @@
     <body>
         <!-- #Modals Start ==================== -->
         <!-- ### Crop entity (User, News and Legal info content) image ### -->
-        <div class="modal fade" id="cropModal1" tabindex="-1" aria-labelledby="cropModal1Label" aria-hidden="true">
+        <div class="modal fade" id="cropModalUser" tabindex="-1" aria-labelledby="cropModalUserLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="cropModal1Label">{{ __('miscellaneous.crop_before_save') }}</h5>
+                        <h5 class="modal-title" id="cropModalUserLabel">{{ __('miscellaneous.crop_before_save') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -133,7 +132,7 @@
                             <div class="row">
                                 <div class="col-12 mb-sm-0 mb-4">
                                     <div class="bg-image">
-                                        <img src="" id="retrieved_image1" class="img-fluid">
+                                        <img src="" id="retrieved_image" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +141,7 @@
                     <div class="modal-footer d-flex justify-content-between">
                         <input type="hidden" name="user_id" id="userId" value="{{ !empty(Auth::user()) ? (Route::is('party.member.datas') ? $selected_member->id : Auth::user()->id) : null }}">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -169,7 +168,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_recto" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -196,7 +195,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_verso" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -280,15 +279,15 @@
                         </li>
     @endif
                         {{-- AVATAR --}}
-                        <li id="avatar" class="dropdown">
+                        <li id="avatarLinkWrapper" class="dropdown">
                             <a href="{{ route('account') }}" id="avatarLink">
-                                <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="37" class="rounded-circle me-2">
+                                <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="37" class="user-image rounded-circle me-2">
                             </a>
 
                             <ul class="py-0 rounded-3 overflow-hidden">
                                 <li class="d-lg-flex d-none justify-content-center pt-3 bg-info">
                                     <div class="bg-image">
-                                        <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="70" class="img-thumbnail rounded-circle me-2">
+                                        <img src="{{ $current_user->avatar_url != null ? $current_user->avatar_url : asset('assets/img/user.png') }}" alt="{{ $current_user->firstname . ' ' . $current_user->lastname }}" width="70" class="user-image img-thumbnail rounded-circle me-2">
                                         <div class="mask"></div>
                                     </div>
                                 </li>
@@ -374,6 +373,91 @@
                 </nav><!-- .navbar -->
             </div>
         </header><!-- End Header -->
+
+@if (!empty(request()->alert_success))
+        <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-10 mx-auto">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span class="bi bi-info-circle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
+                        request()->alert_success }}
+                        <button type="button" class="btn-close mt-1" data-bs-dismiss="alert"
+                            aria-label="@lang('miscellaneous.close')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endif
+@if (\Session::has('success_message'))
+        <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-10 mx-auto">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span class="bi bi-info-circle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
+                        \Session::get('success_message') }}
+                        <button type="button" class="btn-close mt-1" data-bs-dismiss="alert"
+                            aria-label="@lang('miscellaneous.close')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endif
+@if (!empty($alert_success))
+        <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-10 mx-auto">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span class="bi bi-info-circle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
+                        $alert_success }}
+                        <button type="button" class="btn-close mt-1" data-bs-dismiss="alert"
+                            aria-label="@lang('miscellaneous.close')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endif
+@if (\Session::has('exception'))
+        <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-10 mx-auto">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="bi bi-exclamation-triangle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
+                        \Session::get('exception') }}
+                        <button type="button" class="btn-close mt-1" data-bs-dismiss="alert"
+                            aria-label="@lang('miscellaneous.close')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endif
+@if (\Session::has('error_message'))
+        <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-10 mx-auto">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="bi bi-exclamation-triangle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
+                        \Session::get('error_message') }}
+                        <button type="button" class="btn-close mt-1" data-bs-dismiss="alert"
+                            aria-label="@lang('miscellaneous.close')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endif
+@if (!empty($response_error))
+        <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-10 mx-auto">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="bi bi-exclamation-triangle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
+                        $response_error->message }}
+                        <button type="button" class="btn-close mt-1" data-bs-dismiss="alert"
+                            aria-label="@lang('miscellaneous.close')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+@endif
 
         <!-- ======= Main ======= -->
         <main id="main">
@@ -513,7 +597,7 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <div class="form-floating">
-                                                <input type="number" name="register_amount" id="register_amount" class="form-control" placeholder="@lang('miscellaneous.amount')" required{{ \Session::has('error_message') ? ' autofocus' : '' }}>
+                                                <input type="number" name="register_amount" id="register_amount" class="form-control" placeholder="@lang('miscellaneous.amount')" required>
                                                 <label for="register_amount">@lang('miscellaneous.amount')</label>
                                             </div>
 
@@ -610,7 +694,6 @@
         <script src="{{ asset('assets/addons/lonely/php-email-form/validate.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/dataTables/datatables.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/cropper/js/cropper.min.js') }}"></script>
-        <script src="{{ asset('assets/addons/custom/croppie/croppie.min.js') }}"></script>
 
         <!-- Lonely Javascript -->
         <script src="{{ asset('assets/js/script.lonely.js') }}"></script>
@@ -618,74 +701,10 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var currentHost = $(location).attr('port') ? $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':' + $(location).attr('port') : $(location).attr('protocol') + '//' + $(location).attr('hostname')
+                var apiURL = 'https://jptshienda.dev:1443';
+                // var apiURL = 'https://api.jptshienda.cd';
                 var headers = {'Authorization': 'Bearer ' + $('[name="jpt-devref"]').attr('content'), 'Accept': 'application/json', 'X-localization': navigator.language};
-
-                // Get cropped image
-                // --- ID card recto
-                elemChange('retrieved_image_recto', 300, 169, 350, 197, '#image_recto', 'cropModal_recto', '#cropModal_recto #crop', 1244, 700, '.identity-recto', '#data_recto', '[for="image_recto"]');
-                // --- ID card verso
-                elemChange('retrieved_image_verso', 300, 169, 350, 197, '#image_verso', 'cropModal_verso', '#cropModal_verso #crop', 1244, 700, '.identity-verso', '#data_verso', '[for="image_verso"]');
-
-                function elemChange(image_id, wiewport_W, wiewport_H, boundary_W, boundary_H, input_id, modal_id, 
-                                    crop_btn, response_W, response_H, result_img, result_inputHidden, label) {
-                    var retrievedImage = document.getElementById(image_id);
-                    var modal = new bootstrap.Modal(document.getElementById(modal_id), {
-                        keyboard: false
-                    });
-
-                    var cropped_image = $(retrievedImage).croppie({
-                        enableExif: true,
-                        viewport: {
-                            width: wiewport_W,
-                            height: wiewport_H,
-                            type:'square' //circle
-                        },
-                        boundary: {
-                            width: boundary_W,
-                            height: boundary_H
-                        }
-                    });
-
-                    $(input_id).on('change', function () {
-                        var reader = new FileReader();
-
-                        reader.onload = function (event) {
-                            cropped_image.croppie('bind', {
-                                url: event.target.result
-
-                            }).then(function () {
-                                console.log('jQuery bind complete');
-                            });
-                        }
-
-                        reader.readAsDataURL(this.files[0]);
-                        modal.show();
-                    });
-
-                    $(modal).on('hidden.bs.modal', function () {
-                        $(cropped_image).croppie('destroy');
-
-                        retrievedImage.src = null;
-                    });
-
-                    $(crop_btn).click(function (event) {
-                        event.preventDefault();
-                        cropped_image.croppie('result', {
-                            type: 'canvas',
-                            size: {
-                                width: response_W,
-                                height: response_H
-                            }
-
-                        }).then(function (response) {
-                            $(result_img).attr('src', response);
-                            $(result_inputHidden).attr('value', response);
-                            $(label).addClass('opacity-0');
-                        });
-
-                        modal.hide();
-                    });
-                }
+                var currentLanguage = $('html').attr('lang');
 
                 // jQuery DataTable
                 $('#dataList').DataTable({
@@ -706,9 +725,210 @@
                 /* Auto-resize textarea */
                 autosize($('textarea'));
 
-                /* jQuery Date picker */
-                var currentLanguage = $('html').attr('lang');
+                /* Get cropped image */
+                // Modals
+                var modalUser = $('#cropModalUser');
+                var modalRecto = $('#cropModal_recto');
+                var modalVerso = $('#cropModal_verso');
+                // Preview images
+                var retrievedAvatar = document.getElementById('retrieved_image');
+                var retrievedImageRecto = document.getElementById('retrieved_image_recto');
+                var currentImageRecto = document.querySelector('#rectoImageWrapper img');
+                var retrievedImageVerso = document.getElementById('retrieved_image_verso');
+                var currentImageVerso = document.querySelector('#versoImageWrapper img');
+                var cropper;
 
+                // AVATAR
+                $('#avatar').on('change', function (e) {
+                    var files = e.target.files;
+                    var done = function (url) {
+                        retrievedAvatar.src = url;
+                        var modal = new bootstrap.Modal(document.getElementById('cropModalUser'), { keyboard: false });
+
+                        modal.show();
+                    };
+
+                    if (files && files.length > 0) {
+                        var reader = new FileReader();
+
+                        reader.onload = function () {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                });
+
+                $(modalUser).on('shown.bs.modal', function () {
+                    cropper = new Cropper(retrievedAvatar, {
+                        aspectRatio: 1,
+                        viewMode: 3,
+                        preview: '#cropModalUser .preview',
+                        done: function (data) { console.log(data); },
+                        error: function (data) { console.log(data); }
+                    });
+
+                }).on('hidden.bs.modal', function () {
+                    cropper.destroy();
+
+                    cropper = null;
+                });
+
+                $('#cropModalUser #crop_avatar').click(function () {
+                    // Ajax loading image to tell user to wait
+                    $('.user-image').attr('src', currentHost + '/assets/img/ajax-loading.gif');
+
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 700,
+                        height: 700
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        URL.createObjectURL(blob);
+
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64_data = reader.result;
+                            var entity_id = document.getElementById('user_id').value;
+                            var mUrl = apiURL + '/api/user/update_avatar_picture/' + parseInt($('#userId').val());
+                            var datas = JSON.stringify({ 'id': parseInt($('#userId').val()), 'user_id': entity_id, 'image_64': base64_data });
+
+                            modalUser.hide();
+
+                            $.ajax({
+                                headers: headers,
+                                type: 'PUT',
+                                contentType: 'application/json',
+                                url: mUrl,
+                                dataType: 'json',
+                                data: datas,
+                                success: function (res) {
+                                    $('.user-image').attr('src', res);
+                                    window.location.reload();
+                                },
+                                error: function (xhr, error, status_description) {
+                                    console.log(xhr.responseJSON);
+                                    console.log(xhr.status);
+                                    console.log(error);
+                                    console.log(status_description);
+                                }
+                            });
+                        };
+                    });
+                });
+
+                // RECTO
+                $('#image_recto').on('change', function (e) {
+                    var files = e.target.files;
+                    var done = function (url) {
+                        retrievedImageRecto.src = url;
+                        var modal = new bootstrap.Modal(document.getElementById('cropModal_recto'), { keyboard: false });
+
+                        modal.show();
+                    };
+
+                    if (files && files.length > 0) {
+                        var reader = new FileReader();
+
+                        reader.onload = function () {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                });
+
+                $('#cropModal_recto').on('shown.bs.modal', function () {
+                    cropper = new Cropper(retrievedImageRecto, {
+                        aspectRatio: 16 / 9,
+                        viewMode: 3,
+                        preview: '#cropModal_recto .preview'
+                    });
+
+                }).on('hidden.bs.modal', function () {
+                    cropper.destroy();
+
+                    cropper = null;
+                });
+
+                $('#cropModal_recto #crop_recto').on('click', function () {
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 1280,
+                        height: 720
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        URL.createObjectURL(blob);
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64_data = reader.result;
+
+                            $(currentImageRecto).attr('src', base64_data);
+                            $('#register_recto').attr('value', base64_data);
+                        };
+                    });
+
+                    modalRecto.hide();
+                });
+
+                // VERSO
+                $('#image_verso').on('change', function (e) {
+                    var files = e.target.files;
+                    var done = function (url) {
+                        retrievedImageVerso.src = url;
+                        var modal = new bootstrap.Modal(document.getElementById('cropModal_verso'), { keyboard: false });
+
+                        modal.show();
+                    };
+
+                    if (files && files.length > 0) {
+                        var reader = new FileReader();
+
+                        reader.onload = function () {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                });
+
+                $('#cropModal_verso').on('shown.bs.modal', function () {
+                    cropper = new Cropper(retrievedImageVerso, {
+                        aspectRatio: 16 / 9,
+                        viewMode: 3,
+                        preview: '#cropModal_verso .preview'
+                    });
+
+                }).on('hidden.bs.modal', function () {
+                    cropper.destroy();
+
+                    cropper = null;
+                });
+
+                $('#cropModal_verso #crop_verso').on('click', function () {
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 1280,
+                        height: 720
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        URL.createObjectURL(blob);
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64_data = reader.result;
+
+                            $(currentImageVerso).attr('src', base64_data);
+                            $('#register_verso').attr('value', base64_data);
+                        };
+                    });
+
+                    modalVerso.hide();
+                });
+
+                /* jQuery Date picker */
                 $('#register_birthdate').datepicker({
                     dateFormat: currentLanguage.startsWith('fr') ? 'dd/mm/yy' : 'mm/dd/yy',
                     onSelect: function () {
@@ -779,8 +999,7 @@
                         headers: headers,
                         type: 'PUT',
                         contentType: 'application/json',
-                        url: 'https://jptshienda.dev:1443/api/notification/mark_all_read/' + parseInt($(this).attr('data-user-id')),
-                        // url: 'https://api.jptshienda.cd/api/notification/mark_all_read/' + parseInt($(this).attr('data-user-id')),
+                        url: apiURL + '/api/notification/mark_all_read/' + parseInt($(this).attr('data-user-id')),
                         success: function () {
                             window.location.reload();
                         },

@@ -380,7 +380,7 @@ class AccountController extends Controller
                     'surname' => $request->register_surname,
                     'gender' => $request->register_gender,
                     'birth_city' => $request->register_birth_city,
-                    'birth_date' => str_starts_with(app()->getLocale(), 'fr') ? explode('/', $request->register_birthdate)[2] . '-' . explode('/', $request->register_birthdate)[1] . '-' . explode('/', $request->register_birthdate)[0] : explode('/', $request->register_birthdate)[2] . '-' . explode('/', $request->register_birthdate)[0] . '-' . explode('/', $request->register_birthdate)[1],
+                    'birth_date' => !empty($request->register_birthdate) ? (str_starts_with(app()->getLocale(), 'fr') ? explode('/', $request->register_birthdate)[2] . '-' . explode('/', $request->register_birthdate)[1] . '-' . explode('/', $request->register_birthdate)[0] : explode('/', $request->register_birthdate)[2] . '-' . explode('/', $request->register_birthdate)[0] . '-' . explode('/', $request->register_birthdate)[1]) : null,
                     'nationality' => $request->register_nationality,
                     'p_o_box' => $request->register_p_o_box,
                     'email' => $request->register_email,
@@ -459,16 +459,9 @@ class AccountController extends Controller
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            if ($user->data->role_user->role->role_name != 'Administrateur' AND $user->data->role_user->role->role_name != 'Développeur' AND $user->data->role_user->role->role_name != 'Manager') {
-                return view('dashboard.account', [
-                    'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false)
-                ]);
+            $exceptionData = json_decode($e->getResponse()->getBody()->getContents(), false);
 
-            } else {
-                return view('account', [
-                    'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false)
-                ]);
-            }
+            return redirect()->back()->with('error_message', $exceptionData->data);
         }
     }
 

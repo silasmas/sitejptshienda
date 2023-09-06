@@ -11,7 +11,7 @@ return [
     | Miscellaneous Language Lines
     |--------------------------------------------------------------------------
     |
-     */
+    */
     'drc' => 'Democratic Republic of the Congo',
     'foundation_name' => 'Jean Pierre Tshienda Foundation',
     'foundation_description' => 'Our primary vocation is to support the underprivileged, particularly in the LUKUNGA district and throughout the Democratic Republic of Congo, to facilitate their socio-economic and cultural development.',

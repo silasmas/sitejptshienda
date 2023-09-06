@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="keywords" content="@lang('miscellaneous.keywords')">
-        <meta name="description" content="">
+        <meta name="description" content="@lang('miscellaneous.slogan')">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="jpt-devref" content="IQmxemeH2oYJ7Rsp3yx97S8GEsCVEQdtNaWuh88dfYp66P0HJS8g2xVqEeCnFImCaWKyn733o7jOtzxwB5INSU5W26Bw63QruvZl">
 
@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
-                        <input type="hidden" name="userId" id="userId" value="{{ !empty(Auth::user()) ? (Route::is('party.member.datas') ? $selected_member->id : Auth::user()->id) : null }}">
+                        <input type="hidden" name="userId" id="userId" value="{{ !empty(Auth::user()) ? Auth::user()->id : null }}">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
                         <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
                     </div>
@@ -376,7 +376,7 @@
 
 @if (!empty(request()->alert_success))
         <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-4 col-md-6 col-10 mx-auto">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <span class="bi bi-info-circle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
@@ -390,7 +390,7 @@
 @endif
 @if (\Session::has('success_message'))
         <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-4 col-md-6 col-10 mx-auto">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <span class="bi bi-info-circle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
@@ -404,7 +404,7 @@
 @endif
 @if (!empty($alert_success))
         <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-4 col-md-6 col-10 mx-auto">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <span class="bi bi-info-circle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
@@ -418,7 +418,7 @@
 @endif
 @if (\Session::has('exception'))
         <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-4 col-md-6 col-10 mx-auto">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <span class="bi bi-exclamation-triangle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
@@ -432,7 +432,7 @@
 @endif
 @if (\Session::has('error_message'))
         <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-4 col-md-6 col-10 mx-auto">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <span class="bi bi-exclamation-triangle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
@@ -446,7 +446,7 @@
 @endif
 @if (!empty($response_error))
         <div class="position-fixed w-100" style="top: -5px; z-index: 9999;">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-lg-4 col-md-6 col-10 mx-auto">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <span class="bi bi-exclamation-triangle me-2 mb-0 fs-4" style="vertical-align: -3px;"></span> {{
@@ -701,8 +701,8 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var currentHost = $(location).attr('port') ? $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':' + $(location).attr('port') : $(location).attr('protocol') + '//' + $(location).attr('hostname')
-                var apiURL = 'https://jptshienda.dev:1443';
-                // var apiURL = 'https://api.jptshienda.cd';
+                // var apiURL = 'https://jptshienda.dev:1443';
+                var apiURL = 'https://api.jptshienda.cd';
                 var headers = {'Authorization': 'Bearer ' + $('[name="jpt-devref"]').attr('content'), 'Accept': 'application/json', 'X-localization': navigator.language};
                 var currentLanguage = $('html').attr('lang');
 

@@ -1398,7 +1398,7 @@
 
                 $('#cropModal_recto').on('shown.bs.modal', function () {
                     cropper = new Cropper(retrievedImageRecto, {
-                        aspectRatio: 4 / 3,
+                        // aspectRatio: 4 / 3,
                         viewMode: 3,
                         preview: '#cropModal_recto .preview'
                     });
@@ -1411,8 +1411,8 @@
 
                 $('#cropModal_recto #crop_recto').on('click', function () {
                     var canvas = cropper.getCroppedCanvas({
-                        width: 933,
-                        height: 700
+                        width: 1280,
+                        height: 827
                     });
 
                     canvas.toBlob(function (blob) {
@@ -1453,7 +1453,7 @@
 
                 $('#cropModal_verso').on('shown.bs.modal', function () {
                     cropper = new Cropper(retrievedImageVerso, {
-                        aspectRatio: 4 / 3,
+                        // aspectRatio: 4 / 3,
                         viewMode: 3,
                         preview: '#cropModal_verso .preview'
                     });
@@ -1466,8 +1466,8 @@
 
                 $('#cropModal_verso #crop_verso').on('click', function () {
                     var canvas = cropper.getCroppedCanvas({
-                        width: 933,
-                        height: 700
+                        width: 1280,
+                        height: 827
                     });
 
                     canvas.toBlob(function (blob) {

@@ -61,6 +61,183 @@
                 animation: sk-scaleout 1.0s infinite ease-in-out;
             }
 
+            /********** Custom colors **********/
+            /* background */
+            .acr-bg-blue {
+                background-color: #005dba !important;
+            }
+
+            .acr-bg-blue-transparent {
+                background-color: rgba(0, 93, 186, 0.5) !important;
+            }
+
+            a.acr-bg-blue-transparent:hover {
+                transition: .3s;
+                background-color: rgba(0, 93, 186, 0.7) !important;
+            }
+
+            .acr-bg-yellow {
+                background-color: #febd00 !important;
+            }
+
+            .acr-bg-yellow-transparent {
+                background-color: rgba(255, 188, 1, 0.5) !important;
+            }
+
+            a.acr-bg-yellow-transparent:hover {
+                transition: .3s;
+                background-color: rgba(255, 188, 1, 0.7) !important;
+            }
+
+            .acr-bg-red {
+                background-color: #ad0304 !important;
+            }
+
+            .acr-bg-red-transparent {
+                background-color: rgba(229, 6, 1, 0.5) !important;
+            }
+
+            a.acr-bg-red-transparent:hover {
+                background-color: rgba(229, 6, 1, 0.7) !important;
+            }
+
+            .acr-bg-navy-blue {
+                background-color: #cffafe !important;
+            }
+
+            .acr-bg-blue-gray {
+                background-color: #2f465e !important;
+            }
+
+            .acr-bg-gray {
+                background-color: #e0e0e0 !important;
+            }
+
+            a.acr-bg-gray:hover {
+                transition: .3s;
+                background-color: #c0c0c0 !important;
+            }
+
+            /* button */
+            .acr-btn-blue {
+                background-color: #005dba !important;
+                color: #fff !important;
+                border-color: #0058b1 !important;
+            }
+
+            .acr-btn-blue:hover {
+                background-color: #0058b1 !important;
+                color: #fff !important;
+                border-color: #0058b1 !important;
+            }
+
+            .acr-btn-outline-blue {
+                background-color: transparent !important;
+                color: #005dba !important;
+                border-color: #005dba !important;
+            }
+
+            .acr-btn-outline-blue:hover {
+                background-color: #005dba !important;
+                color: #fff !important;
+                border-color: #005dba !important;
+            }
+
+            .acr-btn-yellow {
+                background-color: #febd00 !important;
+                color: #333 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-yellow:hover {
+                background-color: #f1b500 !important;
+                color: #333 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-outline-yellow {
+                background-color: transparent !important;
+                color: #f1b500 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-outline-yellow:hover {
+                background-color: #f1b500 !important;
+                color: #333 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-red {
+                background-color: #ad0304 !important;
+                color: #fff !important;
+                border-color: #ad0304 !important;
+            }
+
+            .acr-btn-red:hover {
+                background-color: #ad0304 !important;
+                color: #fff !important;
+                border-color: #ad0304 !important;
+            }
+
+            .acr-btn-outline-red {
+                background-color: transparent !important;
+                color: #ad0304 !important;
+                border-color: #ad0304 !important;
+            }
+
+            .acr-btn-outline-red:hover {
+                background-color: #ad0304 !important;
+                color: #fff !important;
+                border-color: #ad0304 !important;
+            }
+
+            /* border */
+            .acr-border-blue {
+                border-color: #005dba !important;
+            }
+
+            .acr-border-yellow {
+                border-color: #febd00 !important;
+            }
+
+            .acr-border-red {
+                border-color: #e20401 !important;
+            }
+
+            /* text */
+            .acr-text-blue {
+                color: #005dba !important;
+            }
+
+            .acr-text-yellow {
+                color: #febd00 !important;
+            }
+
+            .acr-text-red-1 {
+                color: #e20403 !important;
+            }
+
+            .acr-text-red-2 {
+                color: #ad0304 !important;
+            }
+
+            /* paragraph */
+            .acr-line-height-1 {
+                line-height: 1;
+            }
+
+            .acr-line-height-1_4 {
+                line-height: 1.4;
+            }
+
+            .acr-line-height-1_45 {
+                line-height: 1.45;
+            }
+
+            .acr-line-height-1_5 {
+                line-height: 1.5;
+            }
+
             @-webkit-keyframes sk-scaleout {
                 0% {
                     -webkit-transform: scale(0)
@@ -360,10 +537,7 @@
                                             </div>
                                         </div>
                                         <div class="peer peer-greed p-0">
-                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span
-                                                    class="acr-text-red-1">A</span><span
-                                                    class="acr-text-yellow">C</span><span class="acr-text-blue">R</span>
-                                            </h3>
+                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span class="text-blue">J-P</span> <span class="text-green">TSHIENDA</span></h3>
                                         </div>
                                     </div>
                                 </a>
@@ -378,10 +552,7 @@
                                             </div>
                                         </div>
                                         <div class="peer peer-greed p-0">
-                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span
-                                                    class="acr-text-red-1">A</span><span
-                                                    class="acr-text-yellow">C</span><span class="acr-text-blue">R</span>
-                                            </h3>
+                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span class="text-blue">J-P</span> <span class="text-green">TSHIENDA</span></h3>
                                         </div>
                                     </div>
                                 </a>
@@ -396,10 +567,7 @@
                                             </div>
                                         </div>
                                         <div class="peer peer-greed p-0">
-                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span
-                                                    class="acr-text-red-1">A</span><span
-                                                    class="acr-text-yellow">C</span><span class="acr-text-blue">R</span>
-                                            </h3>
+                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span class="text-blue">J-P</span> <span class="text-green">TSHIENDA</span></h3>
                                         </div>
                                     </div>
                                 </a>

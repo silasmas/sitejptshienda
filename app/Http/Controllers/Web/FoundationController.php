@@ -19,11 +19,15 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
  */
 class FoundationController extends Controller
 {
+    public static $apiURL;
     public static $headers;
     public static $client;
 
     public function __construct()
     {
+        // API URL
+        // $this::$apiURL = 'https://jptshienda.dev:1443';
+        $this::$apiURL = 'https://api.jptshienda.cd';
         // Headers for API
         $this::$headers = [
             'Authorization' => 'Bearer IQmxemeH2oYJ7Rsp3yx97S8GEsCVEQdtNaWuh88dfYp66P0HJS8g2xVqEeCnFImCaWKyn733o7jOtzxwB5INSU5W26Bw63QruvZl',
@@ -46,16 +50,16 @@ class FoundationController extends Controller
     public function managers()
     {
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select all roles API URL
-        $url_roles = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/role';
+        $url_roles = $this::$apiURL . '/api/role';
         // Select all users by not role API URL
         $developer_role = 'Manager';
-        $url_manager = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/find_by_role/' . $developer_role;
+        $url_manager = $this::$apiURL . '/api/user/find_by_role/' . $developer_role;
 
         try {
             // Select current user API response
@@ -118,16 +122,16 @@ class FoundationController extends Controller
     public function members()
     {
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select all roles API URL
-        $url_roles = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/role';
+        $url_roles = $this::$apiURL . '/api/role';
         // Select all users by not role API URL
         $developer_role = 'Développeur';
-        $url_not_developer = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/find_by_not_role/' . $developer_role;
+        $url_not_developer = $this::$apiURL . '/api/user/find_by_not_role/' . $developer_role;
 
         try {
             // Select current user API response
@@ -186,20 +190,20 @@ class FoundationController extends Controller
     public function memberDatas($id)
     {
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select all roles API URL
-        $url_roles = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/role';
+        $url_roles = $this::$apiURL . '/api/role';
         // Select a member API URL
-        $url_member = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . (isset(request()->member_id) ? request()->member_id : $id);
+        $url_member = $this::$apiURL . '/api/user/' . (isset(request()->member_id) ? request()->member_id : $id);
         // Select address by type and user API URL
         $legal_address_type = 'Adresse légale';
         $residence_type = 'Résidence actuelle';
-        $url_legal_address = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $legal_address_type . '/ ' . $id;
-        $url_residence = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $residence_type . '/ ' . $id;
+        $url_legal_address = $this::$apiURL . '/api/address/search/' . $legal_address_type . '/ ' . $id;
+        $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . $id;
 
         try {
             // Select current user API response
@@ -243,7 +247,7 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
             $residence = json_decode($response_residence->getBody(), false);
-            $qr_code = QrCode::format('png')->merge((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
             // $qr_code = QrCode::size(135)->generate($member->data->phone);
             $message_membre = Notification::where([["user_id", $member->data->id], ["notif_name", "message"]])->get();
 
@@ -276,9 +280,9 @@ class FoundationController extends Controller
     public function printCard($id)
     {
         // Select a member API URL
-        $url_member = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . $id;
+        $url_member = $this::$apiURL . '/api/user/' . $id;
         $residence_type = 'Résidence actuelle';
-        $url_residence = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $residence_type . '/ ' . $id;
+        $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . $id;
 
         try {
             // Select a member API response
@@ -293,7 +297,7 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
             $residence = json_decode($response_residence->getBody(), false);
-            $qr_code = QrCode::format('png')->merge((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
             // $qr_code = QrCode::size(135)->generate($member->data->phone);
 
             return view('dashboard.print_card', [
@@ -319,15 +323,15 @@ class FoundationController extends Controller
     public function infos()
     {
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select news by type ID API URL
-        $url_news = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news/select_by_type/5';
-        $url_communiques = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news/select_by_type/6';
-        $url_events = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news/select_by_type/7';
+        $url_news = $this::$apiURL . '/api/news/select_by_type/5';
+        $url_communiques = $this::$apiURL . '/api/news/select_by_type/6';
+        $url_events = $this::$apiURL . '/api/news/select_by_type/7';
 
         try {
             // Select current user API response
@@ -375,50 +379,9 @@ class FoundationController extends Controller
             ]);
 
         } catch (ClientException $e) {
-            // Select current user API response
-            $response_user = $this::$client->request('GET', $url_user, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $user = json_decode($response_user->getBody(), false);
-            // Select countries API response
-            $response_country = $this::$client->request('GET', $url_country, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $country = json_decode($response_country->getBody(), false);
-            // Select all received messages API response
-            $response_message = $this::$client->request('GET', $url_message, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $messages = json_decode($response_message->getBody(), false);
-            // // Select news by type ID API response
-            $response_news = $this::$client->request('GET', $url_news, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $news = json_decode($response_news->getBody(), false);
-            $response_communiques = $this::$client->request('GET', $url_communiques, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $communiques = json_decode($response_communiques->getBody(), false);
-            $response_events = $this::$client->request('GET', $url_events, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $events = json_decode($response_events->getBody(), false);
-
             // If the API returns some error, return to the page and display its message
             return view('dashboard.news', [
                 'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-                'current_user' => $user->data,
-                'countries' => $country->data,
-                'messages' => $messages->data,
-                'news' => $news->data,
-                'communiques' => $communiques->data,
-                'events' => $events->data,
             ]);
         }
     }
@@ -432,17 +395,17 @@ class FoundationController extends Controller
     public function infoEntity($entity)
     {
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select news by type ID API URL
-        $url_news = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news/select_by_type/5';
-        $url_communiques = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news/select_by_type/6';
-        $url_events = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news/select_by_type/7';
+        $url_news = $this::$apiURL . '/api/news/select_by_type/5';
+        $url_communiques = $this::$apiURL . '/api/news/select_by_type/6';
+        $url_events = $this::$apiURL . '/api/news/select_by_type/7';
 
         try {
             // Select current user API response
@@ -535,25 +498,25 @@ class FoundationController extends Controller
     public function updateMember(Request $request, $id)
     {
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Update member API URL
-        $url_member = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . $id;
+        $url_member = $this::$apiURL . '/api/user/' . $id;
         // Select address by type and user API URL
         $legal_address_type = 'Adresse légale';
         $residence_type = 'Résidence actuelle';
-        $url_legal_address = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $legal_address_type . '/ ' . $id;
-        $url_residence = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $residence_type . '/ ' . $id;
+        $url_legal_address = $this::$apiURL . '/api/address/search/' . $legal_address_type . '/ ' . $id;
+        $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . $id;
         // Update address API URL
-        $url_update_address = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address';
+        $url_update_address = $this::$apiURL . '/api/address';
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . $id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . $id;
         // Select types by group name API URL
         $offer_type_group = 'Type d\'offre';
         $transaction_type_group = 'Type de transaction';
-        $url_offer_type = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/type/find_by_group/' . $offer_type_group;
-        $url_transaction_type = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/type/find_by_group/' . $transaction_type_group;
+        $url_offer_type = $this::$apiURL . '/api/type/find_by_group/' . $offer_type_group;
+        $url_transaction_type = $this::$apiURL . '/api/type/find_by_group/' . $transaction_type_group;
 
         try {
             // Select current user API response
@@ -617,7 +580,7 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
             $member = json_decode($response_update_member->getBody(), false);
-            $qr_code = QrCode::format('png')->merge((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
             // $qr_code = QrCode::size(135)->generate($member->data->phone);
             $message_membre = Notification::where([["user_id", $member->data->id], ["notif_name", "message"]])->get();
 
@@ -690,11 +653,11 @@ class FoundationController extends Controller
     public function memberAdd(Request $request)
     {
         // Register new user API URL
-        $url_new_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user';
+        $url_new_user = $this::$apiURL . '/api/user';
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         $phone = $request->select_country . $request->phone_number_new_member;
         $inputs = [
             'firstname' => $request->register_firstname,
@@ -750,7 +713,7 @@ class FoundationController extends Controller
     public function updateIdentityDoc(Request $request, $id)
     {
         // Register image API URL
-        $url_image = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/add_image/' . $id;
+        $url_image = $this::$apiURL . '/api/user/add_image/' . $id;
 
         try {
             // Register image API response
@@ -782,19 +745,19 @@ class FoundationController extends Controller
     public function checkToken(Request $request)
     {
         // Log in API URL
-        $url_login = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/login';
+        $url_login = $this::$apiURL . '/api/user/login';
         $given_token = $request->check_digit_1 . $request->check_digit_2 . $request->check_digit_3 . $request->check_digit_4 . $request->check_digit_5 . $request->check_digit_6 . $request->check_digit_7;
         $phone = $request->phone;
         $password = $request->password;
         $token = $request->token;
         // Select current user API URL
-        $url_user = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/user/' . Auth::user()->id;
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all countries API URL
-        $url_country = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/country';
+        $url_country = $this::$apiURL . '/api/country';
         // Select all received messages API URL
-        $url_message = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/message/inbox/' . Auth::user()->id;
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select all roles API URL
-        $url_roles = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/role';
+        $url_roles = $this::$apiURL . '/api/role';
 
         if ($given_token == $request->token) {
             try {
@@ -835,8 +798,8 @@ class FoundationController extends Controller
                 // Select address by type and user API URL
                 $legal_address_type = 'Adresse légale';
                 $residence_type = 'Résidence actuelle';
-                $url_legal_address = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $legal_address_type . '/ ' . $member->data->id;
-                $url_residence = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/address/search/' . $residence_type . '/ ' . $member->data->id;
+                $url_legal_address = $this::$apiURL . '/api/address/search/' . $legal_address_type . '/ ' . $member->data->id;
+                $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . $member->data->id;
 
                 try {
                     // Select address by type and user API response
@@ -850,7 +813,7 @@ class FoundationController extends Controller
                         'verify' => false,
                     ]);
                     $residence = json_decode($response_residence->getBody(), false);
-                    $qr_code = QrCode::format('png')->merge((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
+                    $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
                     // $qr_code = QrCode::size(135)->generate($member->data->phone);
                     $message_membre = Notification::where([["user_id", $member->data->id], ["notif_name", "message"]])->get();
 
@@ -907,7 +870,7 @@ class FoundationController extends Controller
     public function sendNotifMessage(Request $request)
     {
         // Register notification API URL
-        $url_notification = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/notification/store';
+        $url_notification = $this::$apiURL . '/api/notification/store';
 
         try {
             // Register notification API response
@@ -939,7 +902,7 @@ class FoundationController extends Controller
     public function newInfo(Request $request)
     {
         // Register a news API URL
-        $url_news = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news';
+        $url_news = $this::$apiURL . '/api/news';
 
         try {
             // Select a member API response
@@ -957,7 +920,7 @@ class FoundationController extends Controller
 
             if ($request->data_picture != null and $request->data_picture != '') {
                 // Register news image API URL
-                $url_image = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/api/news/add_image/' . $news->data->id;
+                $url_image = $this::$apiURL . '/api/news/add_image/' . $news->data->id;
 
                 $this::$client->request('PUT', $url_image, [
                     'headers' => $this::$headers,

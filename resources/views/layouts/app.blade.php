@@ -1070,7 +1070,7 @@
 
                 xhr.open('PUT', apiURL + '/api/user/switch_status/' + parseInt(id.split('-')[1]) + '/' + (element.getAttribute('aria-current') === 'Activé' ? 4 : 3));
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.setRequestHeader('Authorization', 'Bearer uWNJB6EwpVQwSuL5oJ7S7JkSkLzdpt8M1Xrs1MZITE1bCEbjMhscv8ZX2sTiDBarCHcu1EeJSsSLZIlYjr6YCl7pLycfn2AAQmYm');
+                xhr.setRequestHeader('Authorization', 'Bearer IQmxemeH2oYJ7Rsp3yx97S8GEsCVEQdtNaWuh88dfYp66P0HJS8g2xVqEeCnFImCaWKyn733o7jOtzxwB5INSU5W26Bw63QruvZl');
                 xhr.send(JSON.stringify({'id' : parseInt(id.split('-')[1]), 'status_id' : (element.getAttribute('aria-current') === 'Activé' ? 4 : 3)}));
                 xhr.onload = function () {
                     if(xhr.status === 200) {
@@ -1085,7 +1085,7 @@
 
                 xhr.open('PUT', apiURL + '/api/user/update_role/' + parseInt(id.split('-')[1]));
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.setRequestHeader('Authorization', 'Bearer uWNJB6EwpVQwSuL5oJ7S7JkSkLzdpt8M1Xrs1MZITE1bCEbjMhscv8ZX2sTiDBarCHcu1EeJSsSLZIlYjr6YCl7pLycfn2AAQmYm');
+                xhr.setRequestHeader('Authorization', 'Bearer IQmxemeH2oYJ7Rsp3yx97S8GEsCVEQdtNaWuh88dfYp66P0HJS8g2xVqEeCnFImCaWKyn733o7jOtzxwB5INSU5W26Bw63QruvZl');
                 xhr.send(JSON.stringify({'id' : parseInt(id.split('-')[1]), 'role_id' : (element.value)}));
                 xhr.onload = function () {
                     if(xhr.status === 200) {

@@ -54,7 +54,7 @@
                                                         </div>
                                                         <div class="col-8 pt-1 text-center text-uppercase">
                                                             <h5 class="m-0 fw-bold text-truncate" style="font-family: Arial Narrow; font-size: 11px;">@lang('miscellaneous.drc')</h5>
-                                                            <h3 class="m-0 text-black fw-bold text-truncate" style="font-family: Arial Narrow; font-size: 11px;">Action Commune pour la République</h3>
+                                                            <h3 class="m-0 text-black fw-bold text-truncate" style="font-family: Arial Narrow; font-size: 11px;">@lang('miscellaneous.foundation_name')</h3>
                                                         </div>
                                                         <div class="col-2">
                                                             <div class="bg-image bg-white rounded-circle" style="margin-top: -3px;">
@@ -129,7 +129,7 @@
                                                         </div>
                                                         <div class="col-8 pt-1 text-center text-uppercase">
                                                             <h5 class="m-0 fw-bold text-truncate" style="font-family: Arial Narrow; font-size: 11px;">@lang('miscellaneous.drc')</h5>
-                                                            <h3 class="m-0 text-black fw-bold text-truncate" style="font-family: Arial Narrow; font-size: 11px;">Action Commune pour la République</h3>
+                                                            <h3 class="m-0 text-black fw-bold text-truncate" style="font-family: Arial Narrow; font-size: 11px;">@lang('miscellaneous.foundation_name')</h3>
                                                         </div>
                                                         <div class="col-2">
                                                             <div class="bg-image bg-white rounded-circle" style="margin-top: -3px;">

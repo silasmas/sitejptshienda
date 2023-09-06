@@ -424,7 +424,7 @@
 
     <body class="app">
         <!-- #Modals Start ==================== -->
-        <!-- ### Crop entity (User, News and Legal info content) image ### -->
+        <!-- ### Crop user image ### -->
         <div class="modal fade" id="cropModalUser" tabindex="-1" aria-labelledby="cropModalUserLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -445,6 +445,60 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <input type="hidden" name="userId" id="userId" value="{{ !empty(Auth::user()) ? (Route::is('party.member.datas') ? $selected_member->id : Auth::user()->id) : null }}">
+                        <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
+                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ### Crop news image ### -->
+        <div class="modal fade" id="cropModal_news" tabindex="-1" aria-labelledby="cropModalNewsLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cropModalNewsLabel">{{ __('miscellaneous.crop_before_save') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 mb-sm-0 mb-4">
+                                    <div class="bg-image">
+                                        <img src="" id="retrieved_image_news" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
+                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ### Crop legal info image ### -->
+        <div class="modal fade" id="cropModal_legalInfo" tabindex="-1" aria-labelledby="cropModalLegalInfoLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cropModalLegalInfoLabel">{{ __('miscellaneous.crop_before_save') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 mb-sm-0 mb-4">
+                                    <div class="bg-image">
+                                        <img src="" id="retrieved_image_legalInfo" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
                         <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
                     </div>
@@ -1174,10 +1228,13 @@
                 // Get cropped image
                 // Modals
                 var modalUser = $('#cropModalUser');
+                var modalNews = $('#cropModal_news');
                 var modalRecto = $('#cropModal_recto');
                 var modalVerso = $('#cropModal_verso');
                 // Preview images
                 var retrievedAvatar = document.getElementById('retrieved_image');
+                var retrievedImageNews = document.getElementById('retrieved_image_news');
+                var currentImageNews = document.querySelector('#newsImageWrapper img');
                 var retrievedImageRecto = document.getElementById('retrieved_image_recto');
                 var currentImageRecto = document.querySelector('#rectoImageWrapper img');
                 var retrievedImageVerso = document.getElementById('retrieved_image_verso');
@@ -1264,6 +1321,61 @@
                     });
                 });
 
+                // NEWS
+                $('#image_news').on('change', function (e) {
+                    var files = e.target.files;
+                    var done = function (url) {
+                        retrievedImageNews.src = url;
+                        var modal = new bootstrap.Modal(document.getElementById('cropModal_news'), { keyboard: false });
+
+                        modal.show();
+                    };
+
+                    if (files && files.length > 0) {
+                        var reader = new FileReader();
+
+                        reader.onload = function () {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                });
+
+                $('#cropModal_news').on('shown.bs.modal', function () {
+                    cropper = new Cropper(retrievedImageNews, {
+                        aspectRatio: 1,
+                        viewMode: 3,
+                        preview: '#cropModal_news .preview'
+                    });
+
+                }).on('hidden.bs.modal', function () {
+                    cropper.destroy();
+
+                    cropper = null;
+                });
+
+                $('#cropModal_news #crop_news').on('click', function () {
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 700,
+                        height: 700
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        URL.createObjectURL(blob);
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64_data = reader.result;
+
+                            $(currentImageNews).attr('src', base64_data);
+                            $('#news_picture').attr('value', base64_data);
+                        };
+                    });
+
+                    modalNews.hide();
+                });
+
                 // RECTO
                 $('#image_recto').on('change', function (e) {
                     var files = e.target.files;
@@ -1286,7 +1398,7 @@
 
                 $('#cropModal_recto').on('shown.bs.modal', function () {
                     cropper = new Cropper(retrievedImageRecto, {
-                        aspectRatio: 16 / 9,
+                        aspectRatio: 4 / 3,
                         viewMode: 3,
                         preview: '#cropModal_recto .preview'
                     });
@@ -1299,8 +1411,8 @@
 
                 $('#cropModal_recto #crop_recto').on('click', function () {
                     var canvas = cropper.getCroppedCanvas({
-                        width: 1280,
-                        height: 720
+                        width: 933,
+                        height: 700
                     });
 
                     canvas.toBlob(function (blob) {
@@ -1312,7 +1424,7 @@
                             var base64_data = reader.result;
 
                             $(currentImageRecto).attr('src', base64_data);
-                            $('#register_recto').attr('value', base64_data);
+                            $('#data_recto').attr('value', base64_data);
                         };
                     });
 
@@ -1341,7 +1453,7 @@
 
                 $('#cropModal_verso').on('shown.bs.modal', function () {
                     cropper = new Cropper(retrievedImageVerso, {
-                        aspectRatio: 16 / 9,
+                        aspectRatio: 4 / 3,
                         viewMode: 3,
                         preview: '#cropModal_verso .preview'
                     });
@@ -1354,8 +1466,8 @@
 
                 $('#cropModal_verso #crop_verso').on('click', function () {
                     var canvas = cropper.getCroppedCanvas({
-                        width: 1280,
-                        height: 720
+                        width: 933,
+                        height: 700
                     });
 
                     canvas.toBlob(function (blob) {
@@ -1367,7 +1479,7 @@
                             var base64_data = reader.result;
 
                             $(currentImageVerso).attr('src', base64_data);
-                            $('#register_verso').attr('value', base64_data);
+                            $('#data_verso').attr('value', base64_data);
                         };
                     });
 

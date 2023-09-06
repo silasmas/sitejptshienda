@@ -840,7 +840,7 @@
 
                 $('#cropModal_recto').on('shown.bs.modal', function () {
                     cropper = new Cropper(retrievedImageRecto, {
-                        aspectRatio: 16 / 9,
+                        aspectRatio: 4 / 3,
                         viewMode: 3,
                         preview: '#cropModal_recto .preview'
                     });
@@ -853,8 +853,8 @@
 
                 $('#cropModal_recto #crop_recto').on('click', function () {
                     var canvas = cropper.getCroppedCanvas({
-                        width: 1280,
-                        height: 720
+                        width: 933,
+                        height: 700
                     });
 
                     canvas.toBlob(function (blob) {
@@ -866,7 +866,7 @@
                             var base64_data = reader.result;
 
                             $(currentImageRecto).attr('src', base64_data);
-                            $('#register_recto').attr('value', base64_data);
+                            $('#data_recto').attr('value', base64_data);
                         };
                     });
 
@@ -895,7 +895,7 @@
 
                 $('#cropModal_verso').on('shown.bs.modal', function () {
                     cropper = new Cropper(retrievedImageVerso, {
-                        aspectRatio: 16 / 9,
+                        aspectRatio: 4 / 3,
                         viewMode: 3,
                         preview: '#cropModal_verso .preview'
                     });
@@ -908,8 +908,8 @@
 
                 $('#cropModal_verso #crop_verso').on('click', function () {
                     var canvas = cropper.getCroppedCanvas({
-                        width: 1280,
-                        height: 720
+                        width: 933,
+                        height: 700
                     });
 
                     canvas.toBlob(function (blob) {
@@ -921,7 +921,7 @@
                             var base64_data = reader.result;
 
                             $(currentImageVerso).attr('src', base64_data);
-                            $('#register_verso').attr('value', base64_data);
+                            $('#data_verso').attr('value', base64_data);
                         };
                     });
 

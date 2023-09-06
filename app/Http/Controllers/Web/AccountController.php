@@ -307,24 +307,10 @@ class AccountController extends Controller
      */
     public function updateAccount(Request $request)
     {
-        // Select or Update current user API URL
+        // Update current user API URL
         $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
-        // Select address by type and user API URL
-        $legal_address_type = 'Adresse légale';
-        $residence_type = 'Résidence actuelle';
-        $url_legal_address = $this::$apiURL . '/api/address/search/' . $legal_address_type . '/ ' . Auth::user()->id;
-        $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . Auth::user()->id;
         // Update address API URL
         $url_update_address = $this::$apiURL . '/api/address';
-        // Select all countries API URL
-        $url_country = $this::$apiURL . '/api/country';
-        // Select all received messages API URL
-        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
-        // Select types by group name API URL
-        $offer_type_group = 'Type d\'offre';
-        $transaction_type_group = 'Type de transaction';
-        $url_offer_type = $this::$apiURL . '/api/type/find_by_group/' . $offer_type_group;
-        $url_transaction_type = $this::$apiURL . '/api/type/find_by_group/' . $transaction_type_group;
 
         try {
             // Select user API response
@@ -333,45 +319,8 @@ class AccountController extends Controller
                 'verify'  => false
             ]);
             $user = json_decode($response_user->getBody(), false);
-            // Select address by type and user API response
-            $response_legal_address = $this::$client->request('GET', $url_legal_address, [
-                'headers' => $this::$headers,
-                'verify'  => false
-            ]);
-            $legal_address = json_decode($response_legal_address->getBody(), false);
-            $response_residence = $this::$client->request('GET', $url_residence, [
-                'headers' => $this::$headers,
-                'verify'  => false
-            ]);
-            $residence = json_decode($response_residence->getBody(), false);
-            // Select countries API response
-            $response_country = $this::$client->request('GET', $url_country, [
-                'headers' => $this::$headers,
-                'verify'  => false
-            ]);
-            $country = json_decode($response_country->getBody(), false);
-            // Select all received messages API response
-            $response_message = $this::$client->request('GET', $url_message, [
-                'headers' => $this::$headers,
-                'verify'  => false
-            ]);
-            $messages = json_decode($response_message->getBody(), false);
-            // Select types by group name API response
-            $response_offer_type = $this::$client->request('GET', $url_offer_type, [
-                'headers' => $this::$headers,
-                'verify'  => false
-            ]);
-            $offer_type = json_decode($response_offer_type->getBody(), false);
-            $response_transaction_type = $this::$client->request('GET', $url_transaction_type, [
-                'headers' => $this::$headers,
-                'verify'  => false
-            ]);
-            $transaction_type = json_decode($response_transaction_type->getBody(), false);
-            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/favicon-32x32.png', 0.2, true)->size(135)->generate($user->data->phone);
-            // $qr_code = QrCode::size(135)->generate($user->data->phone);
-
             // Update user API response
-            $response_update_user = $this::$client->request('PUT', $url_user, [
+            $this::$client->request('PUT', $url_user, [
                 'headers' => $this::$headers,
                 'form_params' => [
                     'id' => $user->data->id,
@@ -390,11 +339,10 @@ class AccountController extends Controller
                 ],
                 'verify'  => false
             ]);
-            $user = json_decode($response_update_user->getBody(), false);
 
             // Update legal address API response
             if ($request->register_legal_address_address_content_1) {
-                $response_legal_address = $this::$client->request('POST', $url_update_address, [
+                $this::$client->request('POST', $url_update_address, [
                     'headers' => $this::$headers,
                     'form_params' => [
                         'address_content' => $request->register_legal_address_address_content_1,
@@ -408,12 +356,11 @@ class AccountController extends Controller
                     ],
                     'verify'  => false
                 ]);
-                $legal_address = json_decode($response_legal_address->getBody(), false);
             }
 
             // Update residence API response
             if ($request->register_residence_address_content_1) {
-                $response_residence = $this::$client->request('POST', $url_update_address, [
+                $this::$client->request('POST', $url_update_address, [
                     'headers' => $this::$headers,
                     'form_params' => [
                         'address_content' => $request->register_residence_address_content_1,
@@ -427,35 +374,9 @@ class AccountController extends Controller
                     ],
                     'verify'  => false
                 ]);
-                $residence = json_decode($response_residence->getBody(), false);
             }
 
-            if ($user->data->role_user->role->role_name != 'Administrateur' AND $user->data->role_user->role->role_name != 'Développeur' AND $user->data->role_user->role->role_name != 'Manager') {
-                return view('account', [
-                    'current_user' => $user->data,
-                    'legal_address' => $legal_address->data,
-                    'residence' => $residence->data,
-                    'countries' => $country->data,
-                    'messages' => $messages,
-                    'offer_types' => $offer_type->data,
-                    'transaction_types' => $transaction_type->data,
-                    'qr_code' => $qr_code,
-                    'alert_success' => __('miscellaneous.data_updated')
-                ]);
-
-            } else {
-                return view('dashboard.account', [
-                    'current_user' => $user->data,
-                    'legal_address' => $legal_address->data,
-                    'residence' => $residence->data,
-                    'countries' => $country->data,
-                    'messages' => $messages,
-                    'offer_types' => $offer_type->data,
-                    'transaction_types' => $transaction_type->data,
-                    'qr_code' => $qr_code,
-                    'alert_success' => __('miscellaneous.data_updated')
-                ]);
-            }
+            return redirect()->back()->with('success_message', __('miscellaneous.data_updated'));
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message

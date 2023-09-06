@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="{{ asset('assets/addons/custom/dataTables/datatables.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/addons/custom/cropper/css/cropper.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/sweetalert/sweetalert.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/show-more/dist/css/show-more.min.css') }}">
 
         <!-- Adminator CSS File -->
         <style>
@@ -533,11 +534,11 @@
                                     <div class="peers ai-c fxw-nw">
                                         <div class="peer">
                                             <div class="logo ms-3" style="margin-top: 1.2rem;">
-                                                <img src="{{ asset('assets/img/_logo_.png') }}" alt="" width="37">
+                                                <img src="{{ asset('assets/img/logo.png') }}" alt="" width="37">
                                             </div>
                                         </div>
                                         <div class="peer peer-greed p-0">
-                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span class="text-blue">J-P</span> <span class="text-green">TSHIENDA</span></h3>
+                                            <h5 class="h5 logo-text fw-bold" style="font-family: Arial"><span class="text-primary">J-P</span> <span class="text-success">TSHIENDA</span></h5>
                                         </div>
                                     </div>
                                 </a>
@@ -548,11 +549,11 @@
                                     <div class="peers ai-c fxw-nw">
                                         <div class="peer">
                                             <div class="logo ms-3" style="margin-top: 1.2rem;">
-                                                <img src="{{ asset('assets/img/_logo_.png') }}" alt="" width="37">
+                                                <img src="{{ asset('assets/img/logo.png') }}" alt="" width="37">
                                             </div>
                                         </div>
                                         <div class="peer peer-greed p-0">
-                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span class="text-blue">J-P</span> <span class="text-green">TSHIENDA</span></h3>
+                                            <h5 class="h5 logo-text fw-bold" style="font-family: Arial"><span class="text-primary">J-P</span> <span class="text-success">TSHIENDA</span></h5>
                                         </div>
                                     </div>
                                 </a>
@@ -563,11 +564,11 @@
                                     <div class="peers ai-c fxw-nw">
                                         <div class="peer">
                                             <div class="logo ms-3" style="margin-top: 1.2rem;">
-                                                <img src="{{ asset('assets/img/_logo_.png') }}" alt="" width="37">
+                                                <img src="{{ asset('assets/img/logo.png') }}" alt="" width="37">
                                             </div>
                                         </div>
                                         <div class="peer peer-greed p-0">
-                                            <h3 class="h3 logo-text fw-bold" style="font-family: Arial"><span class="text-blue">J-P</span> <span class="text-green">TSHIENDA</span></h3>
+                                            <h5 class="h5 logo-text fw-bold" style="font-family: Arial"><span class="text-primary">J-P</span> <span class="text-success">TSHIENDA</span></h5>
                                         </div>
                                     </div>
                                 </a>
@@ -1039,6 +1040,7 @@
         <script src="{{ asset('assets/addons/custom/autosize/js/autosize.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/biliap/js/biliap.cores.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/sweetalertjs/sweetalert.min.js') }}"></script>
+        <script src="{{ asset('assets/addons/custom/show-more/dist/js/showMore.min.js') }}"></script>
 
         <!-- Adminator Javascript -->
         <script defer="defer" src="{{ asset('assets/js/scripts.adminator.js') }}"></script>

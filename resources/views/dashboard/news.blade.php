@@ -170,7 +170,7 @@
                                                         <div id="newsImageWrapper" class="bg-image rounded overflow-hidden overlay mb-3">
                                                             <img src="{{ asset('assets/img/blank-news.png') }}" alt="@lang('miscellaneous.manager.info.news.data.add_photo')" class="news-image img-fluid">
                                                             <div class="mask h-100">
-                                                                <label role="button" for="picture" class="d-flex justify-content-center align-items-center h-100 fs-6 text-black text-uppercase">
+                                                                <label role="button" for="image_news" class="d-flex justify-content-center align-items-center h-100 fs-6 text-black text-uppercase">
                                                                     <span>@lang('miscellaneous.manager.info.news.data.add_photo')</span>
                                                                     <input type="file" name="image_news" id="image_news" class="d-none">
                                                                 </label>

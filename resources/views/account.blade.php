@@ -7,6 +7,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-sm-5 col-9 mx-sm-0 mx-auto">
+                            <!-- #Avatar ==================== -->
                             <div class="card border mb-4">
                                 <div class="card-body pt-2 pb-0">
                                     <p class="small card-text text-center"><small>@lang('miscellaneous.click_image') <i class="bi bi-arrow-down"></i></small></p>
@@ -26,10 +27,11 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
-                        <!-- #Personal Infos ==================== -->
                         <div class="col-lg-8 col-sm-7 col-12">
+                            <!-- #Personal Infos ==================== -->
                             <div class="card border mb-4">
                                 <div class="card-header pb-1 d-flex justify-content-between">
                                     <h5 class="h5 m-0">@lang('miscellaneous.account.personal_infos.title')</h5>

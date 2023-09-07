@@ -79,7 +79,7 @@
             @lang('miscellaneous.message.search_result')
 @endif
 
-@if (Route::is('notification'))
+@if (Route::is('notification.home'))
             @lang('miscellaneous.menu.notifications')
 @endif
 

@@ -23,13 +23,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css">
 
         <!-- Addons CSS Files -->
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/mdb/css/mdb.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/bootstrap/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/jquery/css/jquery-ui.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/lonely/swiper/swiper-bundle.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/dataTables/datatables.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/cropper/css/cropper.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/sweetalert/sweetalert.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/mdb/css/mdb.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/jquery/jquery-ui/jquery-ui.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/lonely/swiper/swiper-bundle.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/dataTables/datatables.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/cropper/css/cropper.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/sweetalert2/dist/sweetalert2.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/show-more/dist/css/show-more.min.css') }}">
 
         <!-- Adminator CSS File -->
@@ -446,7 +446,7 @@
                     <div class="modal-footer d-flex justify-content-between">
                         <input type="hidden" name="userId" id="userId" value="{{ !empty(Auth::user()) ? (Route::is('party.member.datas') ? $selected_member->id : Auth::user()->id) : null }}">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0"data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -473,7 +473,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_news" class="btn btn-primary btn-color shadow-0"data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -500,7 +500,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_legalnfo" class="btn btn-primary btn-color shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -527,7 +527,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_recto" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_recto" class="btn btn-primary btn-color shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -554,7 +554,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_verso" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_verso" class="btn btn-primary btn-color shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -885,7 +885,7 @@
                             {{-- Notification --}}
                             <li id="adminNotification" class="notifications{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? ' dropdown' : '' }}">
 @if ($current_user->notifications[0]->status->status_name == 'Non lue')
-                                <span class="counter bg-transparent p-0 border border-4 acr-border-red" style="top: 6px; width: 16px; height: 16px; font-size: O.1rem; color: transparent;"></span>
+                                <span class="counter bg-transparent p-0 border border-4 border-danger" style="top: 6px; width: 16px; height: 16px; font-size: O.1rem; color: transparent;"></span>
 @endif
 
                                 <a href="{{ route('notification.home') }}" id="notificationLink" class="dropdown-toggle no-after" data-bs-toggle="{{ $current_user->notifications[0]->status->status_name == 'Non lue' ? 'dropdown' : '' }}" aria-expanded="false">
@@ -1076,7 +1076,7 @@
 
                 <!-- ### $App Screen Footer ### -->
                 <footer class="bdT ta-c p-30 lh-0 c-grey-600">
-                    <span>&copy; <a href="{{ route('about.home') }}" class="text-info">ACR</a> @lang('miscellaneous.all_right_reserved')</span>
+                    <span>&copy; <a href="{{ route('about.home') }}" class="text-info">@lang('miscellaneous.foundation_name')</a> @lang('miscellaneous.all_right_reserved')</span>
                 </footer>
             </div>
         </div>
@@ -1090,16 +1090,14 @@
         <script src="{{ asset('assets/addons/custom/mdb/js/mdb.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/dataTables/datatables.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/cropper/js/cropper.min.js') }}"></script>
-        <script src="{{ asset('assets/addons/custom/croppie/croppie.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/autosize/js/autosize.min.js') }}"></script>
-        <script src="{{ asset('assets/addons/custom/biliap/js/biliap.cores.js') }}"></script>
-        <script src="{{ asset('assets/addons/custom/sweetalertjs/sweetalert.min.js') }}"></script>
+        <script src="{{ asset('assets/addons/custom/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/show-more/dist/js/showMore.min.js') }}"></script>
 
         <!-- Adminator Javascript -->
         <script defer="defer" src="{{ asset('assets/js/scripts.adminator.js') }}"></script>
+
         <!-- Custom Javascript -->
-        <script src="{{ asset('assets/js/scripts.custom.js') }}"></script>
         <script type="text/javascript">
             var currentHost = $(location).attr('port') ? $(location).attr('protocol') + '//' + $(location).attr('hostname') + ':' + $(location).attr('port') : $(location).attr('protocol') + '//' + $(location).attr('hostname')
             // var apiURL = 'https://jptshienda.dev:1443';
@@ -1149,34 +1147,36 @@
             }
 
             function deletemsg(id, url) {
-                swal({
+                Swal.fire({
                     title: '<?= __("miscellaneous.attention_delete") ?>',
                     text: '<?= __("miscellaneous.confirm_delete") ?>',
                     icon: 'warning',
-                    dangerMode: true,
-                    buttons: {
-                        cancel: '<?= __("miscellaneous.no") ?>',
-                        delete: '<?= __("miscellaneous.yes") ?>'
-                    }
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '<?= __("miscellaneous.yes") ?>',
+                    cancelButtonText: '<?= __("miscellaneous.no") ?>'
 
-                }).then(function (willDelete) {
-                    if (willDelete) {
+                }).then(function (result) {
+                    if (result.isConfirmed) {
                         $.ajax({
                             headers: headers,
-                            url: url + "/" + id,
+                            url: url + '/' + id,
                             method: "DELETE",
-                            data: {'idv':id},
+                            data: {'id': id},
                             success: function (data) {
                                 //  load('#tab-session');
                                 if (!data.success) {
-                                    swal({
-                                        title: data.message,
+                                    Swal.fire({
+                                        title: '',
+                                        text: data.message,
                                         icon: 'error'
                                     });
 
                                 } else {
-                                    swal({
-                                        title: data.message,
+                                    Swal.fire({
+                                        title: '',
+                                        text: data.message,
                                         icon: 'success'
                                     });
                                     location.reload();
@@ -1185,8 +1185,9 @@
                         });
 
                     } else {
-                        swal({
-                            title: '<?= __("miscellaneous.delete_canceled") ?>',
+                        Swal.fire({
+                            title: '',
+                            text: '<?= __("miscellaneous.delete_canceled") ?>',
                             icon: 'error'
                         });
                     }
@@ -1225,12 +1226,96 @@
                     }
                 });
 
+                /* Auto-resize textarea */
+                autosize($('textarea'));
+
+                /* jQuery Date picker */
+                $('#register_birthdate').datepicker({
+                    dateFormat: currentLanguage.startsWith('fr') ? 'dd/mm/yy' : 'mm/dd/yy',
+                    onSelect: function () {
+                        $(this).focus();
+                    }
+                });
+
+                /* On select change, update de country phone code */
+                $('#select_country1').on('change', function () {
+                    var countryPhoneCode = $(this).val();
+
+                    $('#phone_code_text1 .text-value').text(countryPhoneCode);
+                    $('#phone_code1').val(countryPhoneCode);
+                });
+                $('#select_country2').on('change', function () {
+                    var countryPhoneCode = $(this).val();
+
+                    $('#phone_code_text2 .text-value').text(countryPhoneCode);
+                    $('#phone_code2').val(countryPhoneCode);
+                });
+                $('#select_country3').on('change', function () {
+                    var countryPhoneCode = $(this).val();
+
+                    $('#phone_code_text3 .text-value').text(countryPhoneCode);
+                    $('#phone_code3').val(countryPhoneCode);
+                });
+
+                /* On select, show/hide some blocs */
+                // IDENTITY DOC DESCRIPTION
+                $('#register_image_name').on('change', function () {
+                    if ($('#register_image_name option').filter(':selected').text() == 'Autre' || $('#register_image_name option').filter(':selected').text() == 'Other') {
+                        $('#docDescription').removeClass('d-none');
+
+                    } else {
+                        $('#docDescription').addClass('d-none');
+                    }
+                });
+
+                /* On check, show/hide some blocs */
+                // OFFER TYPE
+                $('#donationType .form-check-input').each(function () {
+                    $(this).on('click', function () {
+                        if ($('#anonyme').is(':checked')) {
+                            $('#donorIdentity, #otherDonation').addClass('d-none');
+
+                        } else {
+                            $('#donorIdentity, #otherDonation').removeClass('d-none');
+                        }
+                    });
+                });
+                // TRANSACTION TYPE
+                $('#paymentMethod .form-check-input').each(function () {
+                    $(this).on('click', function () {
+                        if ($('#bank_card').is(':checked')) {
+                            $('#phoneNumberForMoney').addClass('d-none');
+
+                        } else {
+                            $('#phoneNumberForMoney').removeClass('d-none');
+                        }
+                    });
+                });
+
+                /* Mark all notifications as read */
+                $('#markAllRead').click(function (e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        headers: headers,
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        url: apiURL + '/api/notification/mark_all_read/' + parseInt($(this).attr('data-user-id')),
+                        success: function () {
+                            window.location.reload();
+                        },
+                        error: function (xhr, error, status_description) {
+                            console.log(xhr.responseJSON);
+                            console.log(xhr.status);
+                            console.log(error);
+                            console.log(status_description);
+                        }
+                    });
+                });
+
                 // Get cropped image
                 // Modals
                 var modalUser = $('#cropModalUser');
-                var modalNews = $('#cropModal_news');
-                var modalRecto = $('#cropModal_recto');
-                var modalVerso = $('#cropModal_verso');
                 // Preview images
                 var retrievedAvatar = document.getElementById('retrieved_image');
                 var retrievedImageNews = document.getElementById('retrieved_image_news');
@@ -1296,8 +1381,6 @@
                             var entity_id = document.getElementById('user_id').value;
                             var mUrl = apiURL + '/api/user/update_avatar_picture/' + parseInt($('#userId').val());
                             var datas = JSON.stringify({ 'id': parseInt($('#userId').val()), 'user_id': entity_id, 'image_64': base64_data });
-
-                            modalUser.hide();
 
                             $.ajax({
                                 headers: headers,
@@ -1372,8 +1455,6 @@
                             $('#news_picture').attr('value', base64_data);
                         };
                     });
-
-                    modalNews.hide();
                 });
 
                 // RECTO
@@ -1427,8 +1508,6 @@
                             $('#data_recto').attr('value', base64_data);
                         };
                     });
-
-                    modalRecto.hide();
                 });
 
                 // VERSO
@@ -1482,8 +1561,6 @@
                             $('#data_verso').attr('value', base64_data);
                         };
                     });
-
-                    modalVerso.hide();
                 });
             });
         </script>

@@ -103,13 +103,7 @@ class FoundationController extends Controller
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            return view('dashboard.manager', [
-                'current_user' => $user->data,
-                'countries' => $country->data,
-                'messages' => $messages->data,
-                'roles' => $roles->data,
-                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-            ]);
+            return redirect('/')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
         }
     }
 
@@ -175,9 +169,7 @@ class FoundationController extends Controller
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            return view('dashboard.member', [
-                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-            ]);
+            return redirect('/')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
         }
     }
 
@@ -247,7 +239,7 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
             $residence = json_decode($response_residence->getBody(), false);
-            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/favicon-32x32.png', 0.2, true)->size(135)->generate($member->data->phone);
             // $qr_code = QrCode::size(135)->generate($member->data->phone);
             $message_membre = Notification::where([["user_id", $member->data->id], ["notif_name", "message"]])->get();
 
@@ -265,9 +257,7 @@ class FoundationController extends Controller
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            return view('dashboard.member', [
-                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-            ]);
+            return redirect('/members')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
         }
     }
 
@@ -297,7 +287,7 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
             $residence = json_decode($response_residence->getBody(), false);
-            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
+            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/favicon-32x32.png', 0.2, true)->size(135)->generate($member->data->phone);
             // $qr_code = QrCode::size(135)->generate($member->data->phone);
 
             return view('dashboard.print_card', [
@@ -308,9 +298,7 @@ class FoundationController extends Controller
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            return view('dashboard.print_card', [
-                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-            ]);
+            return redirect('/account')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
         }
     }
 
@@ -380,9 +368,7 @@ class FoundationController extends Controller
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            return view('dashboard.news', [
-                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-            ]);
+            return redirect('/')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
         }
     }
 
@@ -398,8 +384,6 @@ class FoundationController extends Controller
         $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Select all countries API URL
         $url_country = $this::$apiURL . '/api/country';
-        // Select all received messages API URL
-        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select all received messages API URL
         $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
         // Select news by type ID API URL
@@ -428,7 +412,7 @@ class FoundationController extends Controller
             $messages = json_decode($response_message->getBody(), false);
 
             if ($entity == 'news') {
-                // // Select news by type ID API response
+                // Select news by type ID API response
                 $response_news = $this::$client->request('GET', $url_news, [
                     'headers' => $this::$headers,
                     'verify' => false,
@@ -481,9 +465,65 @@ class FoundationController extends Controller
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            return view('dashboard.print_card', [
-                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
+            return redirect('/infos')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
+        }
+    }
+
+    /**
+     * GET: News details page
+     *
+     * @param  $locale
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function infoDatas($entity, $id)
+    {
+        // Select current user API URL
+        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
+        // Select all countries API URL
+        $url_country = $this::$apiURL . '/api/country';
+        // Select all received messages API URL
+        $url_message = $this::$apiURL . '/api/message/inbox/' . Auth::user()->id;
+        // Select news by ID API URL
+        $url_news = $this::$apiURL . '/api/news/' . $id;
+
+        try {
+            // Select current user API response
+            $response_user = $this::$client->request('GET', $url_user, [
+                'headers' => $this::$headers,
+                'verify' => false,
             ]);
+            $user = json_decode($response_user->getBody(), false);
+            // Select countries API response
+            $response_country = $this::$client->request('GET', $url_country, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $country = json_decode($response_country->getBody(), false);
+            // Select all received messages API response
+            $response_message = $this::$client->request('GET', $url_message, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $messages = json_decode($response_message->getBody(), false);
+            // Select news by type ID API response
+            $response_news = $this::$client->request('GET', $url_news, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $news = json_decode($response_news->getBody(), false);
+
+            return view('dashboard.news', [
+                'current_user' => $user->data,
+                'countries' => $country->data,
+                'messages' => $messages->data,
+                'entity' => $entity,
+                'entity_id' => $entity == 'news' ? 5 : ($entity == 'communique' ? 6 : ($entity == 'event' ? 7 : null)),
+                'news' => $news->data,
+            ]);
+
+        } catch (ClientException $e) {
+            // If the API returns some error, return to the page and display its message
+            return redirect('/infos')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
         }
     }
 
@@ -497,68 +537,12 @@ class FoundationController extends Controller
      */
     public function updateMember(Request $request, $id)
     {
-        // Select current user API URL
-        $url_user = $this::$apiURL . '/api/user/' . Auth::user()->id;
         // Update member API URL
         $url_member = $this::$apiURL . '/api/user/' . $id;
-        // Select address by type and user API URL
-        $legal_address_type = 'Adresse légale';
-        $residence_type = 'Résidence actuelle';
-        $url_legal_address = $this::$apiURL . '/api/address/search/' . $legal_address_type . '/ ' . $id;
-        $url_residence = $this::$apiURL . '/api/address/search/' . $residence_type . '/ ' . $id;
         // Update address API URL
         $url_update_address = $this::$apiURL . '/api/address';
-        // Select all countries API URL
-        $url_country = $this::$apiURL . '/api/country';
-        // Select all received messages API URL
-        $url_message = $this::$apiURL . '/api/message/inbox/' . $id;
-        // Select types by group name API URL
-        $offer_type_group = 'Type d\'offre';
-        $transaction_type_group = 'Type de transaction';
-        $url_offer_type = $this::$apiURL . '/api/type/find_by_group/' . $offer_type_group;
-        $url_transaction_type = $this::$apiURL . '/api/type/find_by_group/' . $transaction_type_group;
 
         try {
-            // Select current user API response
-            $response_user = $this::$client->request('GET', $url_user, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $user = json_decode($response_user->getBody(), false);
-            // Select address by type and user API response
-            $response_legal_address = $this::$client->request('GET', $url_legal_address, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $legal_address = json_decode($response_legal_address->getBody(), false);
-            $response_residence = $this::$client->request('GET', $url_residence, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $residence = json_decode($response_residence->getBody(), false);
-            // Select countries API response
-            $response_country = $this::$client->request('GET', $url_country, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $country = json_decode($response_country->getBody(), false);
-            // Select all received messages API response
-            $response_message = $this::$client->request('GET', $url_message, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $messages = json_decode($response_message->getBody(), false);
-            // Select types by group name API response
-            $response_offer_type = $this::$client->request('GET', $url_offer_type, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $offer_type = json_decode($response_offer_type->getBody(), false);
-            $response_transaction_type = $this::$client->request('GET', $url_transaction_type, [
-                'headers' => $this::$headers,
-                'verify' => false,
-            ]);
-            $transaction_type = json_decode($response_transaction_type->getBody(), false);
             // Update member API response
             $response_update_member = $this::$client->request('PUT', $url_member, [
                 'headers' => $this::$headers,
@@ -580,13 +564,10 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
             $member = json_decode($response_update_member->getBody(), false);
-            $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
-            // $qr_code = QrCode::size(135)->generate($member->data->phone);
-            $message_membre = Notification::where([["user_id", $member->data->id], ["notif_name", "message"]])->get();
 
             // Update legal address API response
             if ($request->register_legal_address_address_content_1) {
-                $response_legal_address = $this::$client->request('POST', $url_update_address, [
+                $this::$client->request('POST', $url_update_address, [
                     'headers' => $this::$headers,
                     'form_params' => [
                         'address_content' => $request->register_legal_address_address_content_1,
@@ -600,12 +581,11 @@ class FoundationController extends Controller
                     ],
                     'verify' => false,
                 ]);
-                $legal_address = json_decode($response_legal_address->getBody(), false);
             }
 
             // Update residence API response
             if ($request->register_residence_address_content_1) {
-                $response_residence = $this::$client->request('POST', $url_update_address, [
+                $this::$client->request('POST', $url_update_address, [
                     'headers' => $this::$headers,
                     'form_params' => [
                         'address_content' => $request->register_residence_address_content_1,
@@ -619,28 +599,13 @@ class FoundationController extends Controller
                     ],
                     'verify' => false,
                 ]);
-                $residence = json_decode($response_residence->getBody(), false);
             }
 
-            return view('dashboard.member', [
-                'current_user' => $user->data,
-                'selected_member' => $member->data,
-                'legal_address' => $legal_address->data,
-                'residence' => $residence->data,
-                'countries' => $country->data,
-                'messages' => $messages,
-                'offer_types' => $offer_type->data,
-                'transaction_types' => $transaction_type->data,
-                'qr_code' => $qr_code,
-                'message_membre' => $message_membre,
-                'alert_success' => __('miscellaneous.data_updated'),
-            ]);
+            return redirect('/members/' . $id)->with('alert_success', __('miscellaneous.data_updated'));
 
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
-            return view('dashboard.member', [
-                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-            ]);
+            return redirect('/members/' . $id)->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
         }
     }
 
@@ -664,7 +629,7 @@ class FoundationController extends Controller
             'lastname' => $request->register_lastname,
             'phone' => $phone,
             'status_id' => 4,
-            'role_id' => 5,
+            'role_id' => 4,
         ];
 
         try {
@@ -729,7 +694,7 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
 
-            return Redirect::back()->with('alert_success', __('miscellaneous.registered_data'));
+            return Redirect::back()->with('alert_success', __('notifications.registered_data'));
 
         } catch (ClientException $e) {
             return Redirect::back()->with('response_error', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
@@ -813,7 +778,7 @@ class FoundationController extends Controller
                         'verify' => false,
                     ]);
                     $residence = json_decode($response_residence->getBody(), false);
-                    $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/android-icon-96x96.png', 0.2, true)->size(135)->generate($member->data->phone);
+                    $qr_code = QrCode::format('png')->merge($this::$apiURL . '/assets/img/favicon/favicon-32x32.png', 0.2, true)->size(135)->generate($member->data->phone);
                     // $qr_code = QrCode::size(135)->generate($member->data->phone);
                     $message_membre = Notification::where([["user_id", $member->data->id], ["notif_name", "message"]])->get();
 
@@ -918,7 +883,7 @@ class FoundationController extends Controller
             ]);
             $news = json_decode($response_news->getBody(), false);
 
-            if ($request->data_picture != null and $request->data_picture != '') {
+            if ($request->news_picture != null and $request->news_picture != '') {
                 // Register news image API URL
                 $url_image = $this::$apiURL . '/api/news/add_image/' . $news->data->id;
 
@@ -926,13 +891,60 @@ class FoundationController extends Controller
                     'headers' => $this::$headers,
                     'form_params' => [
                         'news_id' => $news->data->id,
-                        'image_64' => $request->data_picture,
+                        'image_64' => $request->news_picture,
                     ],
                     'verify' => false,
                 ]);
             }
 
-            return Redirect::back()->with('alert_success', __('miscellaneous.registered_data'));
+            return Redirect::back()->with('alert_success', __('notifications.registered_data'));
+
+        } catch (ClientException $e) {
+            return Redirect::back()->with('response_error', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
+        }
+    }
+
+    /**
+     * POST: Register news/communique/event
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateInfo(Request $request, $entity, $id)
+    {
+        // Update a news API URL
+        $url_news = $this::$apiURL . '/api/news/' . $id;
+
+        try {
+            // Select a member API response
+            $response_news = $this::$client->request('PUT', $url_news, [
+                'headers' => $this::$headers,
+                'form_params' => [
+                    'id' => $request->news_id,
+                    'news_title' => $request->register_title,
+                    'news_content' => $request->register_content,
+                    'video_url' => $request->register_video_url,
+                    'type_id' => $request->type_id,
+                ],
+                'verify' => false,
+            ]);
+            $news = json_decode($response_news->getBody(), false);
+
+            if ($request->news_picture != null and $request->news_picture != '') {
+                // Register news image API URL
+                $url_image = $this::$apiURL . '/api/news/add_image/' . $news->data->id;
+
+                $this::$client->request('PUT', $url_image, [
+                    'headers' => $this::$headers,
+                    'form_params' => [
+                        'news_id' => $news->data->id,
+                        'image_64' => $request->news_picture,
+                    ],
+                    'verify' => false,
+                ]);
+            }
+
+            return redirect('/infos/' . $entity)->with('alert_success', __('miscellaneous.data_updated'));
 
         } catch (ClientException $e) {
             return Redirect::back()->with('response_error', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);

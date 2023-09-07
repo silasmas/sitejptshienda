@@ -101,7 +101,7 @@ Route::get('/managers/{id}', 'App\Http\Controllers\Web\FoundationController@memb
 Route::get('/infos', 'App\Http\Controllers\Web\FoundationController@infos')->name('party.infos');
 Route::get('/infos/{entity}', 'App\Http\Controllers\Web\FoundationController@infoEntity')->name('party.infos.entity');
 Route::post('/infos/new', 'App\Http\Controllers\Web\FoundationController@newInfo')->name('party.infos.new');
-Route::get('/infos/{entity}/{id}', 'App\Http\Controllers\Web\FoundationController@infoEntityDatas')->whereNumber('id')->name('party.infos.entity.datas');
+Route::get('/infos/{entity}/{id}', 'App\Http\Controllers\Web\FoundationController@infoDatas')->whereNumber('id')->name('party.infos.entity.datas');
 Route::post('/infos/{entity}/{id}', 'App\Http\Controllers\Web\FoundationController@updateInfo')->whereNumber('id');
 
 /*

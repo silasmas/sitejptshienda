@@ -45,8 +45,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-            
-                                            <button class="btn btn-block btn-primary btn-color rounded-pill shadow-0" type="submit">@lang('miscellaneous.public.home.register_member.register')</button>
+
+                                            <button class="btn btn-block btn-success btn-color rounded-pill shadow-0" type="submit">@lang('miscellaneous.register')</button>
 
     @if (!empty($error_message))
                                             <p class="mt-4 mb-0 text-center text-danger small">{{ $error_message }}</p>

@@ -23,12 +23,12 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css">
 
         <!-- Addons CSS Files -->
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/mdb/css/mdb.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/bootstrap/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/jquery/css/jquery-ui.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/lonely/swiper/swiper-bundle.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/dataTables/datatables.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/addons/custom/cropper/css/cropper.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/mdb/css/mdb.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/jquery/jquery-ui/jquery-ui.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/lonely/swiper/swiper-bundle.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/dataTables/datatables.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/addons/custom/cropper/css/cropper.min.css') }}">
 
         <!-- Lonely CSS File -->
         <link rel="stylesheet" href="{{ asset('assets/css/style.lonely.css') }}">
@@ -119,7 +119,7 @@
 
     <body>
         <!-- #Modals Start ==================== -->
-        <!-- ### Crop entity (User, News and Legal info content) image ### -->
+        <!-- ### Crop user image ### -->
         <div class="modal fade" id="cropModalUser" tabindex="-1" aria-labelledby="cropModalUserLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -141,7 +141,7 @@
                     <div class="modal-footer d-flex justify-content-between">
                         <input type="hidden" name="userId" id="userId" value="{{ !empty(Auth::user()) ? Auth::user()->id : null }}">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_avatar" class="btn btn-primary btn-color shadow-0"data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -168,7 +168,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_recto" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_recto" class="btn btn-primary btn-color shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -195,7 +195,7 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light border border-default shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.cancel') }}</button>
-                        <button type="button" id="crop_verso" class="btn btn-primary btn-color shadow-0">{{ __('miscellaneous.register') }}</button>
+                        <button type="button" id="crop_verso" class="btn btn-primary btn-color shadow-0" data-bs-dismiss="modal">{{ __('miscellaneous.register') }}</button>
                     </div>
                 </div>
             </div>
@@ -681,7 +681,7 @@
 
         <!-- JavaScript Libraries -->
         <script src="{{ asset('assets/addons/custom/jquery/js/jquery.min.js') }}"></script>
-        <script src="{{ asset('assets/addons/custom/jquery/js/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('assets/addons/custom/jquery/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/mdb/js/mdb.min.js') }}"></script>
         <script src="{{ asset('assets/addons/custom/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('assets/addons/lonely/purecounter/purecounter_vanilla.js') }}"></script>
@@ -722,211 +722,29 @@
                     $("html, body").animate({ scrollTop: "0" });
                 });
 
+                // Show/Hide ID card recto/verso
+                $('#rectoVersoText').click(function (e) {
+                    e.preventDefault();
+
+                    var rectoText = '<?= __("miscellaneous.recto") ?>';
+                    var versoText = '<?= __("miscellaneous.verso") ?>';
+
+                    if ($('#cardVerso').hasClass('d-none')) {
+                        $('#cardVerso').removeClass('d-none');
+                        $('#cardRecto').addClass('d-none');
+
+                        $('#rectoVersoText span').text(rectoText);
+
+                    } else {
+                        $('#cardVerso').addClass('d-none');
+                        $('#cardRecto').removeClass('d-none');
+
+                        $('#rectoVersoText span').text(versoText);
+                    }
+                });
+
                 /* Auto-resize textarea */
                 autosize($('textarea'));
-
-                /* Get cropped image */
-                // Modals
-                var modalUser = $('#cropModalUser');
-                var modalRecto = $('#cropModal_recto');
-                var modalVerso = $('#cropModal_verso');
-                // Preview images
-                var retrievedAvatar = document.getElementById('retrieved_image');
-                var retrievedImageRecto = document.getElementById('retrieved_image_recto');
-                var currentImageRecto = document.querySelector('#rectoImageWrapper img');
-                var retrievedImageVerso = document.getElementById('retrieved_image_verso');
-                var currentImageVerso = document.querySelector('#versoImageWrapper img');
-                var cropper;
-
-                // AVATAR
-                $('#avatar').on('change', function (e) {
-                    var files = e.target.files;
-                    var done = function (url) {
-                        retrievedAvatar.src = url;
-                        var modal = new bootstrap.Modal(document.getElementById('cropModalUser'), { keyboard: false });
-
-                        modal.show();
-                    };
-
-                    if (files && files.length > 0) {
-                        var reader = new FileReader();
-
-                        reader.onload = function () {
-                            done(reader.result);
-                        };
-                        reader.readAsDataURL(files[0]);
-                    }
-                });
-
-                $(modalUser).on('shown.bs.modal', function () {
-                    cropper = new Cropper(retrievedAvatar, {
-                        aspectRatio: 1,
-                        viewMode: 3,
-                        preview: '#cropModalUser .preview',
-                        done: function (data) { console.log(data); },
-                        error: function (data) { console.log(data); }
-                    });
-
-                }).on('hidden.bs.modal', function () {
-                    cropper.destroy();
-
-                    cropper = null;
-                });
-
-                $('#cropModalUser #crop_avatar').click(function () {
-                    // Ajax loading image to tell user to wait
-                    $('.user-image').attr('src', currentHost + '/assets/img/ajax-loading.gif');
-
-                    var canvas = cropper.getCroppedCanvas({
-                        width: 700,
-                        height: 700
-                    });
-
-                    canvas.toBlob(function (blob) {
-                        URL.createObjectURL(blob);
-
-                        var reader = new FileReader();
-
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function () {
-                            var base64_data = reader.result;
-                            var entity_id = document.getElementById('user_id').value;
-                            var mUrl = apiURL + '/api/user/update_avatar_picture/' + parseInt($('#userId').val());
-                            var datas = JSON.stringify({ 'id': parseInt($('#userId').val()), 'user_id': entity_id, 'image_64': base64_data });
-
-                            modalUser.hide();
-
-                            $.ajax({
-                                headers: headers,
-                                type: 'PUT',
-                                contentType: 'application/json',
-                                url: mUrl,
-                                dataType: 'json',
-                                data: datas,
-                                success: function (res) {
-                                    $('.user-image').attr('src', res);
-                                    window.location.reload();
-                                },
-                                error: function (xhr, error, status_description) {
-                                    console.log(xhr.responseJSON);
-                                    console.log(xhr.status);
-                                    console.log(error);
-                                    console.log(status_description);
-                                }
-                            });
-                        };
-                    });
-                });
-
-                // RECTO
-                $('#image_recto').on('change', function (e) {
-                    var files = e.target.files;
-                    var done = function (url) {
-                        retrievedImageRecto.src = url;
-                        var modal = new bootstrap.Modal(document.getElementById('cropModal_recto'), { keyboard: false });
-
-                        modal.show();
-                    };
-
-                    if (files && files.length > 0) {
-                        var reader = new FileReader();
-
-                        reader.onload = function () {
-                            done(reader.result);
-                        };
-                        reader.readAsDataURL(files[0]);
-                    }
-                });
-
-                $('#cropModal_recto').on('shown.bs.modal', function () {
-                    cropper = new Cropper(retrievedImageRecto, {
-                        aspectRatio: 4 / 3,
-                        viewMode: 3,
-                        preview: '#cropModal_recto .preview'
-                    });
-
-                }).on('hidden.bs.modal', function () {
-                    cropper.destroy();
-
-                    cropper = null;
-                });
-
-                $('#cropModal_recto #crop_recto').on('click', function () {
-                    var canvas = cropper.getCroppedCanvas({
-                        width: 933,
-                        height: 700
-                    });
-
-                    canvas.toBlob(function (blob) {
-                        URL.createObjectURL(blob);
-                        var reader = new FileReader();
-
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function () {
-                            var base64_data = reader.result;
-
-                            $(currentImageRecto).attr('src', base64_data);
-                            $('#data_recto').attr('value', base64_data);
-                        };
-                    });
-
-                    modalRecto.hide();
-                });
-
-                // VERSO
-                $('#image_verso').on('change', function (e) {
-                    var files = e.target.files;
-                    var done = function (url) {
-                        retrievedImageVerso.src = url;
-                        var modal = new bootstrap.Modal(document.getElementById('cropModal_verso'), { keyboard: false });
-
-                        modal.show();
-                    };
-
-                    if (files && files.length > 0) {
-                        var reader = new FileReader();
-
-                        reader.onload = function () {
-                            done(reader.result);
-                        };
-                        reader.readAsDataURL(files[0]);
-                    }
-                });
-
-                $('#cropModal_verso').on('shown.bs.modal', function () {
-                    cropper = new Cropper(retrievedImageVerso, {
-                        aspectRatio: 4 / 3,
-                        viewMode: 3,
-                        preview: '#cropModal_verso .preview'
-                    });
-
-                }).on('hidden.bs.modal', function () {
-                    cropper.destroy();
-
-                    cropper = null;
-                });
-
-                $('#cropModal_verso #crop_verso').on('click', function () {
-                    var canvas = cropper.getCroppedCanvas({
-                        width: 933,
-                        height: 700
-                    });
-
-                    canvas.toBlob(function (blob) {
-                        URL.createObjectURL(blob);
-                        var reader = new FileReader();
-
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function () {
-                            var base64_data = reader.result;
-
-                            $(currentImageVerso).attr('src', base64_data);
-                            $('#data_verso').attr('value', base64_data);
-                        };
-                    });
-
-                    modalVerso.hide();
-                });
 
                 /* jQuery Date picker */
                 $('#register_birthdate').datepicker({
@@ -1009,6 +827,203 @@
                             console.log(error);
                             console.log(status_description);
                         }
+                    });
+                });
+
+                /* Get cropped image */
+                // Modals
+                var modalUser = $('#cropModalUser');
+                // Preview images
+                var retrievedAvatar = document.getElementById('retrieved_image');
+                var retrievedImageNews = document.getElementById('retrieved_image_news');
+                var currentImageNews = document.querySelector('#newsImageWrapper img');
+                var retrievedImageRecto = document.getElementById('retrieved_image_recto');
+                var currentImageRecto = document.querySelector('#rectoImageWrapper img');
+                var retrievedImageVerso = document.getElementById('retrieved_image_verso');
+                var currentImageVerso = document.querySelector('#versoImageWrapper img');
+                var cropper;
+
+                // AVATAR
+                $('#avatar').on('change', function (e) {
+                    var files = e.target.files;
+                    var done = function (url) {
+                        retrievedAvatar.src = url;
+                        var modal = new bootstrap.Modal(document.getElementById('cropModalUser'), { keyboard: false });
+
+                        modal.show();
+                    };
+
+                    if (files && files.length > 0) {
+                        var reader = new FileReader();
+
+                        reader.onload = function () {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                });
+
+                $(modalUser).on('shown.bs.modal', function () {
+                    cropper = new Cropper(retrievedAvatar, {
+                        aspectRatio: 1,
+                        viewMode: 3,
+                        preview: '#cropModalUser .preview',
+                        done: function (data) { console.log(data); },
+                        error: function (data) { console.log(data); }
+                    });
+
+                }).on('hidden.bs.modal', function () {
+                    cropper.destroy();
+
+                    cropper = null;
+                });
+
+                $('#cropModalUser #crop_avatar').click(function () {
+                    // Ajax loading image to tell user to wait
+                    $('.user-image').attr('src', currentHost + '/assets/img/ajax-loading.gif');
+
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 700,
+                        height: 700
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        URL.createObjectURL(blob);
+
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64_data = reader.result;
+                            var entity_id = document.getElementById('user_id').value;
+                            var mUrl = apiURL + '/api/user/update_avatar_picture/' + parseInt($('#userId').val());
+                            var datas = JSON.stringify({ 'id': parseInt($('#userId').val()), 'user_id': entity_id, 'image_64': base64_data });
+
+                            $.ajax({
+                                headers: headers,
+                                type: 'PUT',
+                                contentType: 'application/json',
+                                url: mUrl,
+                                dataType: 'json',
+                                data: datas,
+                                success: function (res) {
+                                    $('.user-image').attr('src', res);
+                                    window.location.reload();
+                                },
+                                error: function (xhr, error, status_description) {
+                                    console.log(xhr.responseJSON);
+                                    console.log(xhr.status);
+                                    console.log(error);
+                                    console.log(status_description);
+                                }
+                            });
+                        };
+                    });
+                });
+
+                // RECTO
+                $('#image_recto').on('change', function (e) {
+                    var files = e.target.files;
+                    var done = function (url) {
+                        retrievedImageRecto.src = url;
+                        var modal = new bootstrap.Modal(document.getElementById('cropModal_recto'), { keyboard: false });
+
+                        modal.show();
+                    };
+
+                    if (files && files.length > 0) {
+                        var reader = new FileReader();
+
+                        reader.onload = function () {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                });
+
+                $('#cropModal_recto').on('shown.bs.modal', function () {
+                    cropper = new Cropper(retrievedImageRecto, {
+                        // aspectRatio: 4 / 3,
+                        viewMode: 3,
+                        preview: '#cropModal_recto .preview'
+                    });
+
+                }).on('hidden.bs.modal', function () {
+                    cropper.destroy();
+
+                    cropper = null;
+                });
+
+                $('#cropModal_recto #crop_recto').on('click', function () {
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 1280,
+                        height: 827
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        URL.createObjectURL(blob);
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64_data = reader.result;
+
+                            $(currentImageRecto).attr('src', base64_data);
+                            $('#data_recto').attr('value', base64_data);
+                        };
+                    });
+                });
+
+                // VERSO
+                $('#image_verso').on('change', function (e) {
+                    var files = e.target.files;
+                    var done = function (url) {
+                        retrievedImageVerso.src = url;
+                        var modal = new bootstrap.Modal(document.getElementById('cropModal_verso'), { keyboard: false });
+
+                        modal.show();
+                    };
+
+                    if (files && files.length > 0) {
+                        var reader = new FileReader();
+
+                        reader.onload = function () {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(files[0]);
+                    }
+                });
+
+                $('#cropModal_verso').on('shown.bs.modal', function () {
+                    cropper = new Cropper(retrievedImageVerso, {
+                        // aspectRatio: 4 / 3,
+                        viewMode: 3,
+                        preview: '#cropModal_verso .preview'
+                    });
+
+                }).on('hidden.bs.modal', function () {
+                    cropper.destroy();
+
+                    cropper = null;
+                });
+
+                $('#cropModal_verso #crop_verso').on('click', function () {
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 1280,
+                        height: 827
+                    });
+
+                    canvas.toBlob(function (blob) {
+                        URL.createObjectURL(blob);
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64_data = reader.result;
+
+                            $(currentImageVerso).attr('src', base64_data);
+                            $('#data_verso').attr('value', base64_data);
+                        };
                     });
                 });
             });

@@ -411,7 +411,7 @@ class AccountController extends Controller
                 'verify'  => false
             ]);
 
-            return Redirect::back()->with('alert_success', __('miscellaneous.registered_data'));
+            return Redirect::back()->with('alert_success', __('notifications.registered_data'));
 
         } catch (ClientException $e) {
             return Redirect::back()->with('response_error', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);

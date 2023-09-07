@@ -1770,7 +1770,7 @@ class HomeController extends Controller
             ];
 
             if ($inputs_offer['transaction_type_id'] == null) {
-                return Redirect::back()->with('error_message', __('miscellaneous.transaction_type_error'));
+                return Redirect::back()->with('error_message', __('notifications.transaction_type_error'));
             }
 
             if ($inputs_offer['transaction_type_id'] != null) {
@@ -1829,17 +1829,17 @@ class HomeController extends Controller
 
         } else {
             if ($request->transaction_type_id == null) {
-                return Redirect::back()->with('error_message', __('miscellaneous.transaction_type_error'));
+                return Redirect::back()->with('error_message', __('notifications.transaction_type_error'));
             }
 
             if ($request->select_country == null || $request->other_phone_number == null || $request->select_currency == null) {
-                return Redirect::back()->with('error_message', __('miscellaneous.required_fields'));
+                return Redirect::back()->with('error_message', __('notifications.required_fields'));
             }
 
             if ($request->transaction_type_id != null) {
                 if ($request->transaction_type_id == 1) {
                     if ($request->select_country == null || $request->other_phone_number == null || $request->select_currency == null) {
-                        return Redirect::back()->with('error_message', __('miscellaneous.required_fields'));
+                        return Redirect::back()->with('error_message', __('notifications.required_fields'));
                     }
                     if ($inputs_user['firstname'] != null or $inputs_user['lastname'] != null or $inputs_user['phone'] != null) {
                         try {
@@ -1990,7 +1990,7 @@ class HomeController extends Controller
 
                 if ($request->transaction_type_id == 2) {
                     if ($request->select_currency == null) {
-                        return Redirect::back()->with('error_message', __('miscellaneous.required_fields'));
+                        return Redirect::back()->with('error_message', __('notifications.required_fields'));
                     }
                     if ($inputs_user['firstname'] != null or $inputs_user['lastname'] != null or $inputs_user['phone'] != null) {
                         // Register user API Response

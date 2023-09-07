@@ -236,7 +236,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$news_item->id}},'../api/news');"><i class="fa fa-trash-o"></i></a><br>
+                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$news_item->id}},'https://api.jptshienda.cd/api/news');"><i class="fa fa-trash-o"></i></a><br>
                                                                 <a href="{{ route('party.infos.entity.datas', ['entity' => 'news', 'id' => $news_item->id]) }}" class="btn btn-transparent p-0 fs-5 acr-text-blue shadow-0" title="@lang('miscellaneous.change')" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                                                             </td>
                                                         </tr>
@@ -270,7 +270,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$communique->id}},'../api/news');"><i class="fa fa-trash-o"></i></a><br>
+                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$communique->id}},'https://api.jptshienda.cd/api/news');"><i class="fa fa-trash-o"></i></a><br>
                                                                 <a href="{{ route('party.infos.entity.datas', ['entity' => 'communique', 'id' => $communique->id]) }}" class="btn btn-transparent p-0 fs-5 acr-text-blue shadow-0" title="@lang('miscellaneous.change')" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                                                             </td>
                                                         </tr>
@@ -304,7 +304,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$event->id}},'../api/news');"><i class="fa fa-trash-o"></i></a><br>
+                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$event->id}},'https://api.jptshienda.cd/api/news');"><i class="fa fa-trash-o"></i></a><br>
                                                                 <a href="{{ route('party.infos.entity.datas', ['entity' => 'event', 'id' => $event->id]) }}" class="btn btn-transparent p-0 fs-5 acr-text-blue shadow-0" title="@lang('miscellaneous.change')" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                                                             </td>
                                                         </tr>
@@ -332,6 +332,7 @@
                                         <div class="layer w-100 p-20">
                                             <form method="POST" action="{{ route('party.infos.entity.datas', ['entity' => $entity, 'id' => $news->id]) }}">
                                                 <input type="hidden" name="type_id" value="{{ $entity_id }}">
+                                                <input type="hidden" name="news_id" value="{{ $news->id }}">
         @csrf
                                                 <!-- Title -->
                                                 <label for="register_title" class="form-label mb-1 visually-hidden">@lang('miscellaneous.manager.info.news.data.title')</label>
@@ -342,16 +343,16 @@
                                                 <textarea name="register_content" id="register_content" class="form-control mb-3" placeholder="@lang('miscellaneous.manager.info.news.data.content')" required>{{ $news->news_content }}</textarea>
 
                                                 <!-- Add photo -->
-                                                <div id="addPicture" class="row">
+                                                <div class="row">
                                                     <div class="col-md-7 col-8 mx-auto">
-                                                        <div class="bg-image rounded overflow-hidden overlay mb-3">
+                                                        <div id="newsImageWrapper" class="bg-image rounded overflow-hidden overlay mb-3">
                                                             <img src="{{ $news->photo_url != null ? $news->photo_url : asset('assets/img/blank-news.png') }}" alt="@lang('miscellaneous.manager.info.news.data.add_photo')" class="news-image img-fluid">
                                                             <div class="mask h-100">
-                                                                <label role="button" for="picture" class="d-flex justify-content-center align-items-center h-100 fs-6 text-black text-uppercase">
+                                                                <label role="button" for="image_news" class="d-flex justify-content-center align-items-center h-100 fs-6 text-black text-uppercase">
                                                                     <span>@lang('miscellaneous.manager.info.news.data.add_photo')</span>
-                                                                    <input type="file" name="picture" id="picture" class="d-none">
+                                                                    <input type="file" name="image_news" id="image_news" class="d-none">
                                                                 </label>
-                                                                <input type="hidden" name="data_picture" id="data_picture" value="">
+                                                                <input type="hidden" name="news_picture" id="news_picture" value="">
                                                             </div>
                                                         </div>
                                                     </div>

@@ -184,7 +184,7 @@
                                                 </div>
 
                                                 <p class="m-0 small"><strong class="text-uppercase">@lang('miscellaneous.recto')</strong> (@lang('miscellaneous.account.identity_document.click_to_change'))</p>
-                                                <div class="bg-image rounded overflow-hidden overlay mb-2">
+                                                <div id="rectoImageWrapper" class="bg-image rounded overflow-hidden overlay mb-2">
                                                     <img src="{{ $current_user->identity_data != null && $current_user->identity_data->url_recto != null ? $current_user->identity_data->url_recto : asset('assets/img/blank-id-doc.png') }}" alt="@lang('miscellaneous.recto')" class="identity-recto img-fluid">
                                                     <div class="mask h-100">
                                                         <label role="button" for="image_recto" class="d-flex justify-content-center align-items-center h-100 fs-3 text-black text-uppercase">
@@ -196,7 +196,7 @@
                                                 </div>
 
                                                 <p class="m-0 small"><strong class="text-uppercase">@lang('miscellaneous.verso')</strong> (@lang('miscellaneous.account.identity_document.click_to_change'))</p>
-                                                <div class="bg-image rounded overflow-hidden overlay mb-3">
+                                                <div id="versoImageWrapper" class="bg-image rounded overflow-hidden overlay mb-3">
                                                     <img src="{{ $current_user->identity_data != null && $current_user->identity_data->url_verso != null ? $current_user->identity_data->url_verso : asset('assets/img/blank-id-doc.png') }}" alt="@lang('miscellaneous.verso')" class="identity-verso img-fluid">
                                                     <div class="mask h-100">
                                                         <label role="button" for="image_verso" class="d-flex justify-content-center align-items-center h-100 fs-3 text-black text-uppercase">

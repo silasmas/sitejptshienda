@@ -209,28 +209,26 @@
                                                 </div>
 
                                                 <p class="m-0 small"><strong class="text-uppercase">@lang('miscellaneous.recto')</strong> (@lang('miscellaneous.account.identity_document.click_to_change'))</p>
-
-                                                <div class="bg-image rounded overflow-hidden overlay mb-2">
+                                                <div id="rectoImageWrapper" class="bg-image rounded overflow-hidden overlay mb-2">
                                                     <img src="{{ $selected_member->identity_data != null && $selected_member->identity_data->url_recto != null ? $selected_member->identity_data->url_recto : asset('assets/img/blank-id-doc.png') }}" alt="@lang('miscellaneous.recto')" class="identity-recto img-fluid">
                                                     <div class="mask h-100">
                                                         <label role="button" for="image_recto" class="d-flex justify-content-center align-items-center h-100 fs-3 text-black text-uppercase">
                                                             <span class="{{ $selected_member->identity_data != null && $selected_member->identity_data->url_recto != null ? 'opacity-0' : 'opacity-100' }}">@lang('miscellaneous.recto')</span>
                                                             <input type="file" name="image_recto" id="image_recto" class="d-none">
                                                         </label>
-                                                        <input type="hidden" name="register_recto" id="register_recto">
+                                                        <input type="hidden" name="data_recto" id="data_recto">
                                                     </div>
                                                 </div>
 
                                                 <p class="m-0 small"><strong class="text-uppercase">@lang('miscellaneous.verso')</strong> (@lang('miscellaneous.account.identity_document.click_to_change'))</p>
-
-                                                <div class="bg-image rounded overflow-hidden overlay mb-3">
+                                                <div id="versoImageWrapper" class="bg-image rounded overflow-hidden overlay mb-3">
                                                     <img src="{{ $selected_member->identity_data != null && $selected_member->identity_data->url_verso != null ? $selected_member->identity_data->url_verso : asset('assets/img/blank-id-doc.png') }}" alt="@lang('miscellaneous.verso')" class="identity-verso img-fluid">
                                                     <div class="mask h-100">
                                                         <label role="button" for="image_verso" class="d-flex justify-content-center align-items-center h-100 fs-3 text-black text-uppercase">
                                                             <span class="{{ $selected_member->identity_data != null && $selected_member->identity_data->url_recto != null ? 'opacity-0' : 'opacity-100' }}">@lang('miscellaneous.verso')</span>
                                                             <input type="file" name="image_verso" id="image_verso" class="d-none">
                                                         </label>
-                                                        <input type="hidden" name="register_verso" id="register_verso">
+                                                        <input type="hidden" name="data_verso" id="data_verso">
                                                     </div>
                                                 </div>
 
@@ -498,7 +496,7 @@
                                                                 <p class="m-0">{{$m->notification_content }}</p>
                                                             </td>
                                                             <td class="text-center">
-                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" onclick="event.preventDefault();deletemsg({{$m->id}},'../api/notification');">
+                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" onclick="event.preventDefault();deletemsg({{$m->id}},'https://api.jptshienda.cd/api/notification');">
                                                                     <i class="fa fa-trash-o"></i>
                                                                 </a>
                                                             </td>
@@ -672,7 +670,7 @@
         @endif
 
                                                 <div class="col-12 text-center">
-                                                    <button class="btn btn-primary btn-color btn-sm-inline-block btn-block rounded-pill shadow-0" type="submit">@lang('miscellaneous.public.home.register_member.register')</button>
+                                                    <button class="btn btn-primary btn-color btn-sm-inline-block btn-block rounded-pill shadow-0" type="submit">@lang('miscellaneous.start')</button>
                                                 </div>
                                             </div>
                                         </form>

@@ -44,6 +44,183 @@
                 white-space: -o-pre-wrap;    /* Opera 7 */
                 word-wrap: break-word;       /* Internet Explorer 5.5+ */
             }
+
+            /********** Custom colors **********/
+            /* background */
+            .acr-bg-blue {
+                background-color: #005dba !important;
+            }
+
+            .acr-bg-blue-transparent {
+                background-color: rgba(0, 93, 186, 0.5) !important;
+            }
+
+            a.acr-bg-blue-transparent:hover {
+                transition: .3s;
+                background-color: rgba(0, 93, 186, 0.7) !important;
+            }
+
+            .acr-bg-yellow {
+                background-color: #febd00 !important;
+            }
+
+            .acr-bg-yellow-transparent {
+                background-color: rgba(255, 188, 1, 0.5) !important;
+            }
+
+            a.acr-bg-yellow-transparent:hover {
+                transition: .3s;
+                background-color: rgba(255, 188, 1, 0.7) !important;
+            }
+
+            .acr-bg-red {
+                background-color: #ad0304 !important;
+            }
+
+            .acr-bg-red-transparent {
+                background-color: rgba(229, 6, 1, 0.5) !important;
+            }
+
+            a.acr-bg-red-transparent:hover {
+                background-color: rgba(229, 6, 1, 0.7) !important;
+            }
+
+            .acr-bg-navy-blue {
+                background-color: #cffafe !important;
+            }
+
+            .acr-bg-blue-gray {
+                background-color: #2f465e !important;
+            }
+
+            .acr-bg-gray {
+                background-color: #e0e0e0 !important;
+            }
+
+            a.acr-bg-gray:hover {
+                transition: .3s;
+                background-color: #c0c0c0 !important;
+            }
+
+            /* button */
+            .acr-btn-blue {
+                background-color: #005dba !important;
+                color: #fff !important;
+                border-color: #0058b1 !important;
+            }
+
+            .acr-btn-blue:hover {
+                background-color: #0058b1 !important;
+                color: #fff !important;
+                border-color: #0058b1 !important;
+            }
+
+            .acr-btn-outline-blue {
+                background-color: transparent !important;
+                color: #005dba !important;
+                border-color: #005dba !important;
+            }
+
+            .acr-btn-outline-blue:hover {
+                background-color: #005dba !important;
+                color: #fff !important;
+                border-color: #005dba !important;
+            }
+
+            .acr-btn-yellow {
+                background-color: #febd00 !important;
+                color: #333 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-yellow:hover {
+                background-color: #f1b500 !important;
+                color: #333 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-outline-yellow {
+                background-color: transparent !important;
+                color: #f1b500 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-outline-yellow:hover {
+                background-color: #f1b500 !important;
+                color: #333 !important;
+                border-color: #f1b500 !important;
+            }
+
+            .acr-btn-red {
+                background-color: #ad0304 !important;
+                color: #fff !important;
+                border-color: #ad0304 !important;
+            }
+
+            .acr-btn-red:hover {
+                background-color: #ad0304 !important;
+                color: #fff !important;
+                border-color: #ad0304 !important;
+            }
+
+            .acr-btn-outline-red {
+                background-color: transparent !important;
+                color: #ad0304 !important;
+                border-color: #ad0304 !important;
+            }
+
+            .acr-btn-outline-red:hover {
+                background-color: #ad0304 !important;
+                color: #fff !important;
+                border-color: #ad0304 !important;
+            }
+
+            /* border */
+            .acr-border-blue {
+                border-color: #005dba !important;
+            }
+
+            .acr-border-yellow {
+                border-color: #febd00 !important;
+            }
+
+            .acr-border-red {
+                border-color: #e20401 !important;
+            }
+
+            /* text */
+            .acr-text-blue {
+                color: #005dba !important;
+            }
+
+            .acr-text-yellow {
+                color: #febd00 !important;
+            }
+
+            .acr-text-red-1 {
+                color: #e20403 !important;
+            }
+
+            .acr-text-red-2 {
+                color: #ad0304 !important;
+            }
+
+            /* paragraph */
+            .acr-line-height-1 {
+                line-height: 1;
+            }
+
+            .acr-line-height-1_4 {
+                line-height: 1.4;
+            }
+
+            .acr-line-height-1_45 {
+                line-height: 1.45;
+            }
+
+            .acr-line-height-1_5 {
+                line-height: 1.5;
+            }
         </style>
 
         <title>
@@ -500,9 +677,10 @@
                             </div>
                         </div>
 
+@if (!Route::is('account'))
                         <div class="col-lg-5 col-md-8">
                             <form action="{{ route('donate') }}" method="POST" role="form" class="php-email-form mt-sm-0 mt-3">
-@csrf
+    @csrf
                                 <input type="hidden" name="offer_type_id" value="9">
 
                                 <div id="donorIdentity" class="row g-3 mb-4">
@@ -528,13 +706,13 @@
                                         <div class="form-floating pt-0">
                                             <select name="select_country_user" id="select_country2" class="form-select pt-2 shadow-0">
                                                 <option class="small" selected disabled>@lang('miscellaneous.choose_country')</option>
-@isset($countries)
-    @forelse ($countries as $country)
+    @isset($countries)
+        @forelse ($countries as $country)
                                                 <option value="+{{ $country->country_phone_code }}">{{ $country->country_name }}</option>
-    @empty
+        @empty
                                                 <option>@lang('miscellaneous.empty_list')</option>
-    @endforelse
-@endisset
+        @endforelse
+    @endisset
                                             </select>
                                         </div>
                                     </div>
@@ -569,9 +747,9 @@
                                     </div>
 
                                     <div id="paymentMethod">
-@isset($transaction_types)
-    @foreach ($transaction_types as $type)
-        @if ($type->type_name == 'Mobile money')
+    @isset($transaction_types)
+        @foreach ($transaction_types as $type)
+            @if ($type->type_name == 'Mobile money')
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input mt-2" type="radio" name="transaction_type_id" id="mobile_money" value="{{ $type->id }}" />
                                             <label role="button" class="form-check-label" for="mobile_money">
@@ -579,7 +757,7 @@
                                                 @lang('miscellaneous.public.home.donate.send_money.mobile_money')
                                             </label>
                                         </div>
-        @else
+            @else
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input mt-2" type="radio" name="transaction_type_id" id="bank_card" value="{{ $type->id }}" />
                                             <label role="button" class="form-check-label" for="bank_card">
@@ -587,9 +765,9 @@
                                                 @lang('miscellaneous.public.home.donate.send_money.bank_card')
                                             </label>
                                         </div>
-        @endif
-    @endforeach
-@endisset
+            @endif
+        @endforeach
+    @endisset
                                     </div>
                                 </div>
 
@@ -617,13 +795,13 @@
                                         <div class="form-floating pt-0">
                                             <select name="select_country" id="select_country3" class="form-select pt-2 shadow-0">
                                                 <option class="small" selected disabled>@lang('miscellaneous.choose_country')</option>
-@isset($countries)
-    @forelse ($countries as $country)
+    @isset($countries)
+        @forelse ($countries as $country)
                                                 <option value="{{ $country->country_phone_code }}">{{ $country->country_name }}</option>
-    @empty
+        @empty
                                                 <option>@lang('miscellaneous.empty_list')</option>
-    @endforelse
-@endisset
+        @endforelse
+    @endisset
                                             </select>
                                         </div>
                                     </div>
@@ -660,6 +838,7 @@
                                 <button class="btn btn-secondary w-100 rounded-pill" type="submit">@lang('miscellaneous.send')</button>
                             </form>
                         </div>
+@endif
                     </div>
                 </div>
             </section><!-- End Donate Section -->

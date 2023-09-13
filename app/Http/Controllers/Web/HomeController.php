@@ -1731,56 +1731,57 @@ class HomeController extends Controller
                 ]);
             }
 
-        } else {
-            // Select all countries API URL
-            $url_country = $this::$apiURL . '/api/country';
-            // Select types by group name API URL
-            $offer_type_group = 'Type d\'offre';
-            $transaction_type_group = 'Type de transaction';
-            $url_offer_type = $this::$apiURL . '/api/type/find_by_group/' . $offer_type_group;
-            $url_transaction_type = $this::$apiURL . '/api/type/find_by_group/' . $transaction_type_group;
-            // Select news by type API URL
-            $url_jobs = $this::$apiURL . '/api/news/select_by_type/11';
-
-            try {
-                // Select all countries API response
-                $response_country = $this::$client->request('GET', $url_country, [
-                    'headers' => $this::$headers,
-                    'verify' => false,
-                ]);
-                $country = json_decode($response_country->getBody(), false);
-                // Select types by group name API response
-                $response_offer_type = $this::$client->request('GET', $url_offer_type, [
-                    'headers' => $this::$headers,
-                    'verify' => false,
-                ]);
-                $offer_type = json_decode($response_offer_type->getBody(), false);
-                $response_transaction_type = $this::$client->request('GET', $url_transaction_type, [
-                    'headers' => $this::$headers,
-                    'verify' => false,
-                ]);
-                $transaction_type = json_decode($response_transaction_type->getBody(), false);
-                // Select news by type API response
-                $response_jobs = $this::$client->request('GET', $url_jobs, [
-                    'headers' => $this::$headers,
-                    'verify' => false,
-                ]);
-                $jobs = json_decode($response_jobs->getBody(), false);
-
-                return view('career', [
-                    'countries' => $country->data,
-                    'offer_types' => $offer_type->data,
-                    'transaction_types' => $transaction_type->data,
-                    'jobs' => $jobs->data,
-                ]);
-
-            } catch (ClientException $e) {
-                // If the API returns some error, return to the page and display its message
-                return view('career', [
-                    'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
-                ]);
-            }
         }
+        //else {
+        // Select all countries API URL
+        $url_country = $this::$apiURL . '/api/country';
+        // Select types by group name API URL
+        $offer_type_group = 'Type d\'offre';
+        $transaction_type_group = 'Type de transaction';
+        $url_offer_type = $this::$apiURL . '/api/type/find_by_group/' . $offer_type_group;
+        $url_transaction_type = $this::$apiURL . '/api/type/find_by_group/' . $transaction_type_group;
+        // Select news by type API URL
+        $url_jobs = $this::$apiURL . '/api/news/select_by_type/11';
+
+        try {
+            // Select all countries API response
+            $response_country = $this::$client->request('GET', $url_country, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $country = json_decode($response_country->getBody(), false);
+            // Select types by group name API response
+            $response_offer_type = $this::$client->request('GET', $url_offer_type, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $offer_type = json_decode($response_offer_type->getBody(), false);
+            $response_transaction_type = $this::$client->request('GET', $url_transaction_type, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $transaction_type = json_decode($response_transaction_type->getBody(), false);
+            // Select news by type API response
+            $response_jobs = $this::$client->request('GET', $url_jobs, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $jobs = json_decode($response_jobs->getBody(), false);
+
+            return view('career', [
+                'countries' => $country->data,
+                'offer_types' => $offer_type->data,
+                'transaction_types' => $transaction_type->data,
+                'jobs' => $jobs->data,
+            ]);
+
+        } catch (ClientException $e) {
+            // If the API returns some error, return to the page and display its message
+            return view('career', [
+                'response_error' => json_decode($e->getResponse()->getBody()->getContents(), false),
+            ]);
+        }
+        //}
     }
 
     /**

@@ -180,7 +180,7 @@
                                         </div>
                                     </div>
                                     <div class="ta-c bdT w-100 p-20">
-                                        <a href="{{ route('party.infos.entity', ['entity' => 'event']) }}">@lang('miscellaneous.manager.home.recent_offers.link')</a>
+                                        <a href="{{ route('party.infos.entity', ['entity' => 'job']) }}">@lang('miscellaneous.manager.home.recent_offers.link')</a>
                                     </div>
                                 </div>
                             </div>

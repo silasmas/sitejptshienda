@@ -228,6 +228,10 @@
             J-P TSHIENDA | @lang('miscellaneous.slogan')
 @endif
 
+@if (Route::is('career.home') || Route::is('career.datas'))
+            @lang('miscellaneous.menu.public.career')
+@endif
+
 @if (Route::is('account') || Route::is('account.update.password'))
             @lang('miscellaneous.menu.account_settings')
 @endif
@@ -409,6 +413,7 @@
                         <li><a class="nav-link{{ Route::is('about.home') ? ' active' : '' }}" href="{{ route('about.home') }}">@lang('miscellaneous.menu.public.about')</a></li>
                         <li><a class="nav-link{{ Route::is('news.home') ? ' active' : '' }}" href="{{ route('news.home') }}">@lang('miscellaneous.menu.public.news')</a></li>
                         <li><a class="nav-link{{ Route::is('works') ? ' active' : '' }}" href="{{ route('works') }}">@lang('miscellaneous.menu.public.works')</a></li>
+                        <li><a class="nav-link{{ Route::is('career.home') ? ' active' : '' }}" href="{{ route('career.home') }}">@lang('miscellaneous.menu.public.career')</a></li>
 
 @if (!empty(Auth::user()))
     @if ($current_user->notifications[0]->status->status_name == 'Non lue')

@@ -410,13 +410,17 @@
             @lang('miscellaneous.manager.info.event.title')
             @endif
 
+            @if ($entity == 'event')
+            @lang('miscellaneous.manager.info.career.title')
+            @endif
+
         @else
             @lang('miscellaneous.manager.info.title')
         @endif
     @endif
 
     @if (Route::is('party.infos.entity.datas'))
-                {{ $news->news_title }}
+            {{ $news->news_title }}
     @endif
 @endif
         </title>
@@ -850,6 +854,13 @@
                                     class="{{ Route::is('party.infos.entity') AND $entity == 'event' OR Route::is('party.infos.entity.datas') AND $entity == 'event' ? ' actived' : '' }}">
                                     <a href="{{ route('party.infos.entity', ['entity' => 'event']) }}">
                                         <span>@lang('miscellaneous.manager.info.event.title')</span>
+                                    </a>
+                                </li>
+
+                                <li
+                                    class="{{ Route::is('party.infos.entity') AND $entity == 'job' OR Route::is('party.infos.entity.datas') AND $entity == 'job' ? ' actived' : '' }}">
+                                    <a href="{{ route('party.infos.entity', ['entity' => 'job']) }}">
+                                        <span>@lang('miscellaneous.manager.info.career.title')</span>
                                     </a>
                                 </li>
                             </ul>

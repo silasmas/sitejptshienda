@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-lg-8 border-bottom border-default">
                             <div class="section-title">
-                                <h2 class="text-green">{{ $job->job_title }}</h2>
+                                <h2 class="text-green">{{ $job->news_title }}</h2>
                             </div>
 
         @if ($job->video_url != null)
@@ -42,13 +42,13 @@
 
         @if ($job->photo_url != null)
                             <div class="bg-image mb-4">
-                                <img src="{{ !empty($job->photo_url) ? $job->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $job->job_title }}" class="img-fluid rounded-5">
+                                <img src="{{ !empty($job->photo_url) ? $job->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $job->news_title }}" class="img-fluid rounded-5">
                                 <div class="mask"></div>
                             </div>
         @endif
 
                             <pre class="fs-5">
-{{ $job->job_content }}
+{{ $job->news_content }}
                             </pre>
        
                         </div>
@@ -61,7 +61,7 @@
                 @if (!empty($o_j->photo_url))
                                 <div class="col-lg-5 col-sm-4 col-12 mb-lg-0 mb-2">
                                     <div class="bg-image">
-                                        <img src="{{ !empty($o_j->photo_url) ? $o_j->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $o_j->job_title }}" class="img-fluid rounded-3">
+                                        <img src="{{ !empty($o_j->photo_url) ? $o_j->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $o_j->news_title }}" class="img-fluid rounded-3">
                                         <div class="mask"></div>
                                     </div>
                                 </div>
@@ -70,11 +70,11 @@
                                 <div class="{{ !empty($o_j->photo_url) ? 'col-lg-7 col-sm-8 ' : '' }}col-12">
                                     <a href="{{ route('career.datas', ['id' => $o_j->id]) }}">
                                         <small class="m-0 small" style="color: #999;">{{ $o_j->created_at }}</small>
-                @if (!empty($o_j->job_title))
-                                        <p class="m-0 fw-bold text-danger text-truncate">{{ $o_j->job_title }}</p>
-                                        <p class="m-0 text-dark text-truncate">{{ $o_j->job_content }}</p>
+                @if (!empty($o_j->news_title))
+                                        <p class="m-0 fw-bold text-danger text-truncate">{{ $o_j->news_title }}</p>
+                                        <p class="m-0 text-dark text-truncate">{{ $o_j->news_content }}</p>
                 @else
-                                        <p class="m-0 text-dark">{{ Str::limit($o_j->job_content, 45, '...') }}</p>
+                                        <p class="m-0 text-dark">{{ Str::limit($o_j->news_content, 45, '...') }}</p>
                 @endif
                                         <a class="btn fw-bold py-2 ps-0 pe-3 border-bottom border-3 border-danger rounded-0 shadow-0" href="{{ route('career.datas', ['id' => $o_j->id]) }}">
                                         {{ __('miscellaneous.see_more') }}
@@ -123,7 +123,7 @@
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <div class="bg-image mt-1 mb-sm-0 mb-4">
-                                                            <img src="{{ !empty($job_item->photo_url) ? $job_item->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $job_item->job_title }}" class="img-fluid rounded-3">
+                                                            <img src="{{ !empty($job_item->photo_url) ? $job_item->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $job_item->news_title }}" class="img-fluid rounded-3">
                                                             <div class="mask h-100">
             @if (empty($job_item->photo_url))
                                                                 <div class="d-flex justify-content-center align-items-center h-100 fs-5 text-black text-uppercase">
@@ -134,9 +134,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-10 col-12">
-                                                        <h4 class="h4 m-0 text-pri fw-bold">{{ Str::limit($job_item->job_title, 35, '...') }}</h4>
+                                                        <h4 class="h4 m-0 text-pri fw-bold">{{ Str::limit($job_item->news_title, 35, '...') }}</h4>
                                                         <small class="mb-3 small text-muted">{{ $job_item->created_at }}</small>
-                                                        <p class="mt-3 mb-2 text-black acr-line-height-1_45">{{ Str::limit($job_item->job_content, 150, '...') }}</p>
+                                                        <p class="mt-3 mb-2 text-black acr-line-height-1_45">{{ Str::limit($job_item->news_content, 150, '...') }}</p>
                                                         <p class="mb-2">
                                                             <a class="btn fw-bold py-2 ps-0 pe-3 border-0 border-bottom border-3 border-danger rounded-0 shadow-0" href="{{ route('career.datas', ['id' => $job_item->id]) }}">
                                                                 {{ __('miscellaneous.see_more') }}

@@ -140,6 +140,51 @@
                                 </div>
                             </div>
 
+                            <!-- #Recent offers ==================== -->
+                            <div class="masonry-item col-lg-6">
+                                <div class="bd bgc-white">
+                                    <div class="layers">
+                                        <div class="layer w-100 pX-20 pT-20">
+                                            <h6 class="lh-1 m-0">@lang('miscellaneous.manager.home.recent_offers.title')</h6>
+                                        </div>
+
+                                        <div class="layer w-100 pX-20 pT-10 pB-20">
+                                            <div class="list-group">
+        @forelse ($jobs as $job)
+            @if ($loop->index < 7)
+                                                <a href="{{ route('party.infos.entity.datas', ['entity' => 'job', 'id' => $job->id]) }}" class="list-group-item list-group-item-action">
+                                                    <div class="row">
+                                                        <div class="col-lg-2 col-md-1 col-3">
+                                                            <div class="bg-image mt-1">
+                                                                <img src="{{ !empty($job->photo_url) ? $job->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $job->news_title }}" class="img-fluid rounded-3">
+                                                                <div class="mask h-100">
+                @if (empty($job->photo_url))
+                                                                    <div class="d-flex justify-content-center align-items-center h-100 fs-5 text-black text-uppercase">
+                                                                        <span class="bi bi-image text-secondary"></span>
+                                                                    </div>
+                @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-10 col-md-11 col-9">
+                                                            <h5 class="h5 m-0 fw-bold text-truncate">{{ $job->news_title }}</h5>
+                                                            <p class="text-muted text-truncate">{{ $job->news_content }}</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+            @endif
+        @empty
+                                                <span class="list-group-item">@lang('miscellaneous.empty_list')</span>
+        @endforelse
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ta-c bdT w-100 p-20">
+                                        <a href="{{ route('party.infos.entity', ['entity' => 'event']) }}">@lang('miscellaneous.manager.home.recent_offers.link')</a>
+                                    </div>
+                                </div>
+                            </div>
+
     @endif
 
     @if (Route::is('party.infos.entity'))
@@ -306,6 +351,40 @@
                                                             <td>
                                                                 <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$event->id}},'https://api.jptshienda.cd/api/news');"><i class="fa fa-trash-o"></i></a><br>
                                                                 <a href="{{ route('party.infos.entity.datas', ['entity' => 'event', 'id' => $event->id]) }}" class="btn btn-transparent p-0 fs-5 acr-text-blue shadow-0" title="@lang('miscellaneous.change')" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                                            </td>
+                                                        </tr>
+            @empty
+            @endforelse
+        @endif
+
+        @if ($entity == 'job')
+            @forelse ($jobs as $job)
+                                                        <tr>
+                                                            <td>
+                                                                <div class="row">
+                                                                    <div class="col-md-2 d-sm-inline-block d-none">
+                                                                        <div class="bg-image mt-1">
+                                                                            <img src="{{ !empty($job->photo_url) ? $job->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $job->news_title }}" class="img-fluid rounded-3">
+                                                                            <div class="mask h-100">
+                @if (empty($job->photo_url))
+                                                                                <div class="d-flex justify-content-center align-items-center h-100 fs-5 text-black text-uppercase">
+                                                                                    <span class="bi bi-image text-secondary"></span>
+                                                                                </div>
+
+                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-10 col-12">
+                                                                        <h5 class="h5 mt-0 mb-1 fw-bold" style="font-family: Arial, Helvetica, sans-serif;">{{ strlen($job->news_title) > 35 ? substr($job->news_title, 0, 35)."..." : $job->news_title }}</h5>
+                                                                        <p class="mb-1 acr-line-height-1_4 paragraph2">{{ strlen($job->news_content) > 100 ? substr($job->news_content, 0, 100)."..." : $job->news_content }}</p>
+                                                                        <small class="m-0 small text-muted">{{ $job->created_at }}</small>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <a role="button" class="btn btn-transparent p-0 fs-4 text-danger shadow-0" title="@lang('miscellaneous.delete')" data-bs-toggle="tooltip" onclick="event.preventDefault();deletemsg({{$job->id}},'https://api.jptshienda.cd/api/news');"><i class="fa fa-trash-o"></i></a><br>
+                                                                <a href="{{ route('party.infos.entity.datas', ['entity' => 'job', 'id' => $job->id]) }}" class="btn btn-transparent p-0 fs-5 acr-text-blue shadow-0" title="@lang('miscellaneous.change')" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                                                             </td>
                                                         </tr>
             @empty

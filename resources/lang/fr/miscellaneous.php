@@ -281,6 +281,7 @@ return [
             'about' => 'A propos',
             'news' => 'Actualité',
             'works' => 'Nos œuvres',
+            'career' => 'Carrière',
             'donate' => 'Faire un don'
         ],
     ],
@@ -500,6 +501,13 @@ return [
                 'link' => 'Voir tous les événements',
             ],
 
+            // Recent offers
+            'recent_offers' => [
+                'title' => 'Offres d\'emploi récentes',
+                'add_new' => 'Ajouter une offre',
+                'link' => 'Voir toutes les offres',
+            ],
+
             // Other managers
             'other_managers' => [
                 'title' => 'Autres managers',
@@ -550,7 +558,7 @@ return [
                     'video_url' => 'URL de la vidéo Youtube/autre'
                 ],
             ],
-            'career' => [
+            'job' => [
                 'title' => 'Offres d\'emploi',
                 'add' => 'Ajouter une offre',
                 'edit' => 'Editer l\'offre',

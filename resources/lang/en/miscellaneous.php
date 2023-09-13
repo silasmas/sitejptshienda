@@ -281,6 +281,7 @@ return [
             'about' => 'About',
             'news' => 'News',
             'works' => 'Our works',
+            'career' => 'Career',
             'donate' => 'Donate',
         ],
     ],
@@ -500,6 +501,13 @@ return [
                 'link' => 'View all events',
             ],
 
+            // Recent offers
+            'recent_offers' => [
+                'title' => 'Recent job offers',
+                'add_new' => 'Add an offer',
+                'link' => 'View all offers',
+            ],
+
             // Other managers
             'other_managers' => [
                 'title' => 'Other managers',
@@ -550,7 +558,7 @@ return [
                     'video_url' => 'Video URL of Youtube/other'
                 ],
             ],
-            'career' => [
+            'job' => [
                 'title' => 'Jobs',
                 'add' => 'Add a job',
                 'edit' => 'Edit the job',

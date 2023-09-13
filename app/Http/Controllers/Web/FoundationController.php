@@ -320,6 +320,7 @@ class FoundationController extends Controller
         $url_news = $this::$apiURL . '/api/news/select_by_type/5';
         $url_communiques = $this::$apiURL . '/api/news/select_by_type/6';
         $url_events = $this::$apiURL . '/api/news/select_by_type/7';
+        $url_jobs = $this::$apiURL . '/api/news/select_by_type/11';
 
         try {
             // Select current user API response
@@ -356,6 +357,11 @@ class FoundationController extends Controller
                 'verify' => false,
             ]);
             $events = json_decode($response_events->getBody(), false);
+            $response_jobs = $this::$client->request('GET', $url_jobs, [
+                'headers' => $this::$headers,
+                'verify' => false,
+            ]);
+            $jobs = json_decode($response_jobs->getBody(), false);
 
             return view('dashboard.news', [
                 'current_user' => $user->data,
@@ -364,6 +370,7 @@ class FoundationController extends Controller
                 'news' => $news->data,
                 'communiques' => $communiques->data,
                 'events' => $events->data,
+                'jobs' => $jobs->data
             ]);
 
         } catch (ClientException $e) {

@@ -281,6 +281,7 @@ return [
             'about' => 'Na ntina na',
             'news' => 'Bansango',
             'works' => 'Misala na biso',
+            'career' => 'Mosala',
             'donate' => 'Pesa likabo'
         ],
     ],
@@ -500,6 +501,13 @@ return [
                 'link' => 'Lakisa milulu nionso',
             ],
 
+            // Recent offers
+            'recent_offers' => [
+                'title' => 'Misala ya sika',
+                'add_new' => 'Bakisasa mosala',
+                'link' => 'Lakisa misala nionso',
+            ],
+
             // Other managers
             'other_managers' => [
                 'title' => 'Ba managers misusu',
@@ -550,7 +558,7 @@ return [
                     'video_url' => 'URL ya vidéo Youtube/mosusu'
                 ],
             ],
-            'career' => [
+            'job' => [
                 'title' => 'Liste ya misala',
                 'add' => 'Bakisa musala',
                 'edit' => 'Bongola musala',

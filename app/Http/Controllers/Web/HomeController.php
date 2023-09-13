@@ -1852,7 +1852,7 @@ class HomeController extends Controller
                 ]);
                 $other_jobs = json_decode($response_other_jobs->getBody(), false);
 
-                return view('news', [
+                return view('career', [
                     'current_user' => $user->data,
                     'countries' => $country->data,
                     'messages' => $messages->data,
@@ -1866,7 +1866,7 @@ class HomeController extends Controller
                 $decoded_exception = json_decode($e->getResponse()->getBody()->getContents(), false);
 
                 // If the API returns some error, return to the page and display its message
-                return Redirect::route('news.home')->with('exception', $decoded_exception->message);
+                return Redirect::route('career.home')->with('exception', $decoded_exception->message);
             }
 
         } else {
@@ -1913,7 +1913,7 @@ class HomeController extends Controller
                 ]);
                 $other_news = json_decode($response_other_news->getBody(), false);
 
-                return view('news', [
+                return view('career', [
                     'countries' => $country->data,
                     'offer_types' => $offer_type->data,
                     'transaction_types' => $transaction_type->data,
@@ -1925,7 +1925,7 @@ class HomeController extends Controller
                 $decoded_exception = json_decode($e->getResponse()->getBody()->getContents(), false);
 
                 // If the API returns some error, return to the page and display its message
-                return Redirect::route('news.home')->with('exception', $decoded_exception->message);
+                return Redirect::route('career.home')->with('exception', $decoded_exception->message);
             }
         }
     }

@@ -31,32 +31,32 @@
                     <div class="row">
                         <div class="col-lg-8 border-bottom border-default">
                             <div class="section-title">
-                                <h2 class="text-green">{{ $job->news_title }}</h2>
+                                <h2 class="text-green">{{ $news->news_title }}</h2>
                             </div>
 
-        @if ($job->video_url != null)
+        @if ($news->video_url != null)
                             <div class="ratio ratio-16x9 mb-4">
-                                <iframe class="embed-responsive-item w-100" src="{{ $job->video_url }}" style="border-radius: 1.2rem;" allowfullscreen></iframe>
+                                <iframe class="embed-responsive-item w-100" src="{{ $news->video_url }}" style="border-radius: 1.2rem;" allowfullscreen></iframe>
                             </div>
         @endif
 
-        @if ($job->photo_url != null)
+        @if ($news->photo_url != null)
                             <div class="bg-image mb-4">
-                                <img src="{{ !empty($job->photo_url) ? $job->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $job->news_title }}" class="img-fluid rounded-5">
+                                <img src="{{ !empty($news->photo_url) ? $news->photo_url : asset('assets/img/blank-news.png') }}" alt="{{ $news->news_title }}" class="img-fluid rounded-5">
                                 <div class="mask"></div>
                             </div>
         @endif
 
                             <pre class="fs-5">
-{{ $job->news_content }}
+{{ $news->news_content }}
                             </pre>
        
                         </div>
 
                         <div class="col-lg-4">
                             <h4 class="h4 mb-4 fw-bold">{{ __('miscellaneous.public.career.other') }}</h4>
-        @forelse ($other_jobs as $o_j)
-            @if ($loop->index < 4 && $o_j->id != $job->id)
+        @forelse ($other_news as $o_j)
+            @if ($loop->index < 4 && $o_j->id != $news->id)
                             <div class="row mb-lg-4 mb-5">
                 @if (!empty($o_j->photo_url))
                                 <div class="col-lg-5 col-sm-4 col-12 mb-lg-0 mb-2">
@@ -86,7 +86,7 @@
         @empty
         @endforelse
 
-        @if (count($other_jobs) == 1)
+        @if (count($other_news) == 1)
                             <p class="m-0 text">@lang('miscellaneous.empty_list')</p>
         @endif
                             <div class="row mt-5">

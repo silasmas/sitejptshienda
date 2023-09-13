@@ -860,7 +860,7 @@
                                 <li
                                     class="{{ Route::is('party.infos.entity') AND $entity == 'job' OR Route::is('party.infos.entity.datas') AND $entity == 'job' ? ' actived' : '' }}">
                                     <a href="{{ route('party.infos.entity', ['entity' => 'job']) }}">
-                                        <span>@lang('miscellaneous.manager.info.career.title')</span>
+                                        <span>@lang('miscellaneous.manager.info.job.title')</span>
                                     </a>
                                 </li>
                             </ul>

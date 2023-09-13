@@ -1880,7 +1880,7 @@ class HomeController extends Controller
             // Select news by ID API URL
             $url_news = $this::$apiURL . '/api/news/' . $id;
             // Select news by type API URL
-            $url_other_news = $this::$apiURL . '/api/news/select_by_type/5';
+            $url_other_news = $this::$apiURL . '/api/news/select_by_type/11';
 
             try {
                 // Select countries API response

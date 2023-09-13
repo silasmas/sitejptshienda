@@ -390,6 +390,7 @@ class FoundationController extends Controller
         $url_news = $this::$apiURL . '/api/news/select_by_type/5';
         $url_communiques = $this::$apiURL . '/api/news/select_by_type/6';
         $url_events = $this::$apiURL . '/api/news/select_by_type/7';
+        $url_jobs = $this::$apiURL . '/api/news/select_by_type/11';
 
         try {
             // Select current user API response
@@ -463,6 +464,23 @@ class FoundationController extends Controller
                 ]);
             }
 
+            if ($entity == 'job') {
+                $response_jobs = $this::$client->request('GET', $url_jobs, [
+                    'headers' => $this::$headers,
+                    'verify' => false,
+                ]);
+                $jobs = json_decode($response_jobs->getBody(), false);
+
+                return view('dashboard.news', [
+                    'current_user' => $user->data,
+                    'countries' => $country->data,
+                    'messages' => $messages->data,
+                    'entity' => $entity,
+                    'entity_id' => 11,
+                    'jobs' => $jobs->data,
+                ]);
+            }
+
         } catch (ClientException $e) {
             // If the API returns some error, return to the page and display its message
             return redirect('/infos')->with('error_message', (json_decode($e->getResponse()->getBody()->getContents(), false))->message);
@@ -517,7 +535,7 @@ class FoundationController extends Controller
                 'countries' => $country->data,
                 'messages' => $messages->data,
                 'entity' => $entity,
-                'entity_id' => $entity == 'news' ? 5 : ($entity == 'communique' ? 6 : ($entity == 'event' ? 7 : null)),
+                'entity_id' => $entity == 'news' ? 5 : ($entity == 'communique' ? 6 : ($entity == 'event' ? 7 : ($entity == 'job' ? 11 : null))),
                 'news' => $news->data,
             ]);
 

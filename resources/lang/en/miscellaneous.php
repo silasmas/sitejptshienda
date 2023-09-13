@@ -550,6 +550,17 @@ return [
                     'video_url' => 'Video URL of Youtube/other'
                 ],
             ],
+            'career' => [
+                'title' => 'Jobs',
+                'add' => 'Add a job',
+                'edit' => 'Edit the job',
+                'data' => [
+                    'title' => 'Title',
+                    'content' => 'Content',
+                    'add_photo' => 'Add a photo',
+                    'video_url' => 'Video URL of Youtube/other'
+                ],
+            ],
         ],
     ],
 
@@ -1106,6 +1117,13 @@ return [
             'title' => 'News',
             'details' => 'Info details',
             'other' => 'Other informations',
+        ],
+
+        // Career
+        'career' => [
+            'title' => 'Job offer',
+            'details' => 'Job details',
+            'other' => 'Other offers',
         ],
 
         // Works

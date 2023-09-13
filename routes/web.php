@@ -24,6 +24,8 @@ Route::get('/symlink', function () {return view('symlink');})->name('generate_sy
 // Home
 Route::get('/', 'App\Http\Controllers\Web\HomeController@index')->name('home');
 Route::get('/language/{locale}', 'App\Http\Controllers\Web\HomeController@changeLanguage')->name('change_language');
+Route::get('/career', 'App\Http\Controllers\Web\HomeController@career')->name('career.home');
+Route::get('/career/{id}', 'App\Http\Controllers\Web\HomeController@careerDatas')->whereNumber('id')->name('career.datas');
 // Account
 Route::get('/account', 'App\Http\Controllers\Web\AccountController@account')->name('account');
 Route::get('/account/offers', 'App\Http\Controllers\Web\AccountController@account')->name('account.offers');

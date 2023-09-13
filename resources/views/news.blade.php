@@ -138,7 +138,7 @@
                                                         <small class="mb-3 small text-muted">{{ $news_item->created_at }}</small>
                                                         <p class="mt-3 mb-2 text-black acr-line-height-1_45">{{ Str::limit($news_item->news_content, 150, '...') }}</p>
                                                         <p class="mb-2">
-                                                            <a class="btn fw-bold py-2 ps-0 pe-3 border-bottom border-3 border-danger rounded-0 shadow-0" href="{{ route('news.datas', ['id' => $news_item->id]) }}">
+                                                            <a class="btn fw-bold py-2 ps-0 pe-3 border-0 border-bottom border-3 border-danger rounded-0 shadow-0" href="{{ route('news.datas', ['id' => $news_item->id]) }}">
                                                                 {{ __('miscellaneous.see_more') }}
                                                             </a>
                                                         </p>

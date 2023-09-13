@@ -550,6 +550,17 @@ return [
                     'video_url' => 'URL de la vidéo Youtube/autre'
                 ],
             ],
+            'career' => [
+                'title' => 'Offres d\'emploi',
+                'add' => 'Ajouter une offre',
+                'edit' => 'Editer l\'offre',
+                'data' => [
+                    'title' => 'Title',
+                    'content' => 'Contenu',
+                    'add_photo' => 'Ajouter une photo',
+                    'video_url' => 'URL de la vidéo Youtube/autre'
+                ],
+            ],
         ],
     ],
 
@@ -1106,6 +1117,13 @@ return [
             'title' => 'Actualité',
             'details' => 'Détails sur l\'info',
             'other' => 'Autres informations',
+        ],
+
+        // Career
+        'career' => [
+            'title' => 'Offre d\'emploi',
+            'details' => 'Détails sur l\'offre',
+            'other' => 'Autres offres',
         ],
 
         // Works

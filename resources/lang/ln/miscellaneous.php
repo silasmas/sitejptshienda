@@ -550,6 +550,17 @@ return [
                     'video_url' => 'URL ya vidéo Youtube/mosusu'
                 ],
             ],
+            'career' => [
+                'title' => 'Liste ya misala',
+                'add' => 'Bakisa musala',
+                'edit' => 'Bongola musala',
+                'data' => [
+                    'title' => 'Titre',
+                    'content' => 'Makambo ya kati',
+                    'add_photo' => 'Bakisa photo',
+                    'video_url' => 'URL ya vidéo Youtube/mosusu'
+                ],
+            ],
         ],
     ],
 
@@ -1103,14 +1114,21 @@ return [
 
         // News
         'news' => [
-            'title' => 'Actualité',
-            'details' => 'Détails sur l\'info',
-            'other' => 'Autres informations',
+            'title' => 'Nsango',
+            'details' => 'Makambu etali nsango',
+            'other' => 'Bansango misusu',
+        ],
+
+        // Career
+        'career' => [
+            'title' => 'Mosala',
+            'details' => 'Makambu etali mosala',
+            'other' => 'Misala misusu',
         ],
 
         // Works
         'works' => [
-            'title' => 'Nos œuvres',
+            'title' => 'Misala nabiso',
         ],
     ],
 ];

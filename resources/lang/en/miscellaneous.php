@@ -615,7 +615,8 @@ return [
             ],
             'join_us' => [
                 'title' => 'Join us',
-                'content' => 'If you are already registered in the site or in the mobile app, click on the button below to log in. Otherwise, give your names and your phone number to start.'
+                'content' => 'If you are already registered in the site or in the mobile app, click on the button below to log in. Otherwise, give your names and your phone number to start.',
+                'download' => 'You can also download the membership form which you will fill out by hand and send it to us by email or drop it off at our head office.'
             ],
             'projects' => [
                 'title' => 'Projects',
@@ -649,14 +650,6 @@ return [
             'title' => 'About us',
             'why_us' => [
                 'title' => 'Why us?',
-                'subtitle' => 'Let\'s choose change',
-                'content' => 'ACR advocates the change of mentality, the true ethical values, with the aim of bringing individual development in particular, and of the whole country in general. Our motto is:',
-                'item1' => 'Unity',
-                'item1_description' => 'Because together we are stronger and more capable.',
-                'item2' => 'Work',
-                'item2_description' => 'Let us work hard and honestly to develop our nation.',
-                'item3' => 'Patriotism',
-                'item3_description' => 'Love of the fatherland, at the center of our decisions and initiatives.',
             ],
             'testimonials' => [
                 'title' => 'Testimonials',

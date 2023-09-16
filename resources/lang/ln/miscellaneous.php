@@ -610,62 +610,55 @@ return [
                 ],
             ],
             'download_mobile_app' => [
-                'title' => 'Télécharger l\'appli mobile JPTSHIENDA',
-                'content' => 'L\'appli mobile JPTSHIENDA vous permet d\'adhérer à la <span class="text-yellow">Fondation Jean Pierre Tshienda</span>, de rester informé(e) sur les infos de la fondation et de contribuer en ligne.'
+                'title' => 'Télécharger application ya telefone JPTSHIENDA',
+                'content' => 'Application ya telefone JPTSHIENDA ekosunga yo osangana na <span class="text-yellow">Fondation Jean Pierre Tshienda</span>, ozala na basango ya fondation mpe opesa makabo na yo na Internet.'
             ],
             'join_us' => [
-                'title' => 'Nous réjoindre',
-                'content' => 'Si vous êtes déjà inscrit(e) dans le site ou dans l\'appli mobile, cliquez sur le bouton ci-dessous pour vous connecter. Sinon, donnez vos noms et votre n&deg; de téléphone pour commencer.'
+                'title' => 'Sangana na biso',
+                'content' => 'Soki osi okomisama na site Internet to na application ya telefone, finá na buton oyo ezali awa na nse mpo na kokɔta. Soki te, pesá nkombo na yo mpe nimero na yo ya telefone mpo na kobanda.',
+                'download' => 'Okoki pe ko télécharger formulaire ya membre oyo okotondisa na maboko pe okotindela biso yango na email to kotika yango na bureau central na biso.'
             ],
             'projects' => [
-                'title' => 'Projets',
-                'all' => 'Tous',
-                'project1' => 'Public',
-                'project2' => 'Enfants',
-                'project3' => 'Malades'
+                'title' => 'Ba projets',
+                'all' => 'Nionso',
+                'project1' => 'Na public',
+                'project2' => 'Na bana',
+                'project3' => 'Na babeli'
             ],
             'donate' => [
-                'title' => 'Faire un don anonyme ou devenir partenaire',
-                'content1' => 'Si c\'est l\'argent que vous voulez envoyer, vous n\'avez qu\'à sélectionner le mode de paiement ; ensuite, vous l\'envoyez directement en ligne.',
-                'content2' => 'Si vous voulez donner autre chose que de l\'argent, vous n\'avez qu\'à donner la description de votre don.',
-                'anonyme' => 'Faire un don anonyme',
-                'partner' => 'Devenir partenaire',
-                'your_identity' => 'Votre identité',
+                'title' => 'Salá likabo nakobatama to koma partenaire',
+                'content1' => 'Soki ezali mbongo oyo olingi kotinda, osengeli kaka kopona lolenge ya kofuta; na nsima otindi yango mbala moko na nzela ya Internet.',
+                'content2' => 'Soki olingi kopesa eloko mosusu que mbongo, osengeli kaka espliker biso likabo na yo.',
+                'anonyme' => 'Salá likabo nakobatama',
+                'partner' => 'Koma partenaire',
+                'your_identity' => 'Identité na yo',
                 'send_money' => [
-                    'title' => 'Envoyer l\'argent',
-                    'description' => 'Choisir le mode de paiement',
+                    'title' => 'Kotinda mbongo',
+                    'description' => 'Pona lolenge ya kofuta',
                     'mobile_money' => 'Mobile money',
-                    'bank_card' => 'Carte bancaire'
+                    'bank_card' => 'Carte ya bank'
                 ],
                 'other_donation' => [
-                    'title' => 'Autre don',
-                    'description' => 'Description de votre don'
+                    'title' => 'Likabo mosusu',
+                    'description' => 'Limbola ya likabo na yo'
                 ],
             ],
         ],
 
         // About
         'about' => [
-            'title' => 'A propos de nous',
+            'title' => 'Na ntina na biso',
             'why_us' => [
-                'title' => 'Pourquoi nous ?',
-                'subtitle' => 'Faisons le choix du changement',
-                'content' => 'ACR prône le changement de mentalité, les vraies valeurs éthiques, dans le but d\'apporter le développement individuel en particulier, et de tout le pays en général. Notre devise est :',
-                'item1' => 'Unité',
-                'item1_description' => 'Parce qu\'ensemble, nous sommes plus forts et plus capables.',
-                'item2' => 'Travail',
-                'item2_description' => 'Travaillons durement et honnêtement pour développer notre nation.',
-                'item3' => 'Patriotisme',
-                'item3_description' => 'L\'amour de la patrie, au centre de nos décisions et initiatives.',
+                'title' => 'Pona nini biso ?',
             ],
             'testimonials' => [
-                'title' => 'Témoignages',
-                'description' => 'Nous avons reçu plusieurs témoignages venant du public.',
+                'title' => 'Matatoli',
+                'description' => 'Tozwaki matatoli mingi epai ya bato nyonso.',
             ],
             'other_links' => [
-                'title' => 'Autres liens',
-                'link1' => 'Conditions d\'utilisation',
-                'link2' => 'Politique de confidentialité',
+                'title' => 'Ba liens mosusu',
+                'link1' => 'Mibeko ya kosalela',
+                'link2' => 'Politiki ya kobatela',
                 'link3' => 'Centre d\'aide',
                 'link4' => 'FAQ'
             ],

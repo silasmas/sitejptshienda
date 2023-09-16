@@ -53,7 +53,7 @@
                         <div class="col-lg-5 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
                             <div class="bg-image mb-4">
                                 <img src="{{ asset('assets/img/button-playstore-white.png') }}" alt="" class="img-fluid">
-                                <div class="mask"><a href="#" class="stretched-link"></a></div>
+                                <div class="mask"><a href="{{ asset('mobile_app/jpt-app-release.apk') }}" class="stretched-link"></a></div>
                             </div>
 
                             <div class="bg-image">
@@ -141,6 +141,14 @@
                             </form>
                         </div>
 
+                        <div class="col-lg-6 col-sm-9 col-12 mx-auto">
+                            <div class="card">
+                                <div class="card-body pb-1 text-center">
+                                    <p class="lead">@lang('miscellaneous.public.home.join_us.download')</p>
+                                    <a href="{{ asset('assets/doc/FORMULAIRE_DE_DEMANDE_D_ADHESION_F_JP_TSHIENDA.pdf') }}" target="_black" class="btn btn-danger btn-sm-inline-block rounded-pill mb-4 shadow-0">@lang('miscellaneous.download')<i class="bi bi-file-earmark-pdf ms-3"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section><!-- End Join Us Section -->

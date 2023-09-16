@@ -615,7 +615,8 @@ return [
             ],
             'join_us' => [
                 'title' => 'Nous réjoindre',
-                'content' => 'Si vous êtes déjà inscrit(e) dans le site ou dans l\'appli mobile, cliquez sur le bouton ci-dessous pour vous connecter. Sinon, donnez vos noms et votre n&deg; de téléphone pour commencer.'
+                'content' => 'Si vous êtes déjà inscrit(e) dans le site ou dans l\'appli mobile, cliquez sur le bouton ci-dessous pour vous connecter. Sinon, donnez vos noms et votre n&deg; de téléphone pour commencer.',
+                'download' => 'Vous pouvez aussi télécharger le formulaire d\'adhésion que vous allez remplir à la main et nous le renvoyer par mail ou le déposer à notre siège social.'
             ],
             'projects' => [
                 'title' => 'Projets',
@@ -649,14 +650,6 @@ return [
             'title' => 'A propos de nous',
             'why_us' => [
                 'title' => 'Pourquoi nous ?',
-                'subtitle' => 'Faisons le choix du changement',
-                'content' => 'ACR prône le changement de mentalité, les vraies valeurs éthiques, dans le but d\'apporter le développement individuel en particulier, et de tout le pays en général. Notre devise est :',
-                'item1' => 'Unité',
-                'item1_description' => 'Parce qu\'ensemble, nous sommes plus forts et plus capables.',
-                'item2' => 'Travail',
-                'item2_description' => 'Travaillons durement et honnêtement pour développer notre nation.',
-                'item3' => 'Patriotisme',
-                'item3_description' => 'L\'amour de la patrie, au centre de nos décisions et initiatives.',
             ],
             'testimonials' => [
                 'title' => 'Témoignages',

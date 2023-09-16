@@ -222,7 +222,7 @@
                 #cardRecto, #cardVerso {background-color: #cffafe!important; height: 340px!important;}
                 #cardRecto .col-8 h5, #cardRecto .col-8 h3, #cardVerso .col-8 h5, #cardVerso .col-8 h3 {font-family: Arial Narrow!important; font-size: 10.5pt!important;}
                 #cardRecto .row .col-4 .card-body h3, #cardRecto .row .col-8 > p > span {font-size: 10pt; font-family: Arial; color: #555;}
-                #cardVerso h6 {font-size: 11pt; font-family: Arial; color: #555;}
+                #cardVerso h6 {font-size: 9.5pt; font-family: Arial; color: #555;}
             }
         </style>
 

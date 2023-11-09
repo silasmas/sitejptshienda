@@ -54,7 +54,7 @@
             @lang('auth.login')
 @endif
 
-@if (Route::is('password.request') || Route::is('password.reset'))
+@if (Route::is('password.request') || Route::is('password.reset') || Route::is('password.phone'))
             @lang('auth.reset-password')
 @endif
 

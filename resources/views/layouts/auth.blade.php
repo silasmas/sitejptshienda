@@ -71,6 +71,20 @@
     <body class="bg-light">
         <!-- ======= Main ======= -->
         <main id="main">
+@if (!empty($success_msg))
+            <!-- Alert Start -->
+            <div class="position-relative">
+                <div class="row position-absolute w-100" style="opacity: 0.9; z-index: 999;">
+                    <div class="col-lg-3 col-sm-4 mx-auto">
+                        <div class="alert alert-success alert-dismissible fade show rounded-0" role="alert">
+                            {{ $success_msg }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Alert End -->
+@endif
 @if (!empty($alert_msg))
             <!-- Alert Start -->
             <div class="position-relative">

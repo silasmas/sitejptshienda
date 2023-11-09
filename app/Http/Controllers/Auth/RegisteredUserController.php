@@ -171,10 +171,18 @@ class RegisteredUserController extends Controller
                 ]);
                 $user = json_decode($response_login->getBody(), false);
 
-                if (Auth::attempt(['phone' => $user->data->phone, 'password' => $password])) {
-                    $request->session()->regenerate();
+                if (isset($request->redirect) AND $request->redirect == 'password_reset') {
+                    return view('auth.reset-password', [
+                        'user_id' => $user->data->id,
+                        'former_password' => $password
+                    ]);
 
-                    return Redirect::route('account');
+                } else {
+                    if (Auth::attempt(['phone' => $user->data->phone, 'password' => $password])) {
+                        $request->session()->regenerate();
+
+                        return Redirect::route('account');
+                    }
                 }
 
             } catch (ClientException $e) {
@@ -189,12 +197,23 @@ class RegisteredUserController extends Controller
             }
 
         } else {
-            return view('auth.check-token', [
-                'error_message' => __('auth.token_error'),
-                'phone' => $phone,
-                'password' => $password,
-                'token' => $token
-            ]);
+            if (isset($request->redirect) AND $request->redirect == 'password_reset') {
+                return view('auth.check-token', [
+                    'redirect' => $request->redirect,
+                    'error_message' => __('auth.token_error'),
+                    'phone' => $phone,
+                    'password' => $password,
+                    'token' => $token
+                ]);
+
+            } else {
+                return view('auth.check-token', [
+                    'error_message' => __('auth.token_error'),
+                    'phone' => $phone,
+                    'password' => $password,
+                    'token' => $token
+                ]);
+            }
         }
     }
 }
